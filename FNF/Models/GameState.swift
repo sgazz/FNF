@@ -41,6 +41,9 @@ class GameState: ObservableObject {
     @Published var remainingTime: Int?
     @Published var maxCombo: Int = 0
     @Published var lastPowerUp: PowerUpType?
+    @Published var isFastFalling: Bool = false
+    @Published var perfectGames: Int = 0
+    @Published var lastComboTime: Date?
     
     private var timer: Timer?
     private var gameTimer: Timer?
@@ -50,6 +53,8 @@ class GameState: ObservableObject {
     private var gameStartTime: Date?
     private var mistakes: Int = 0
     private var currentStreak: Int = 0
+    private let powerUpChance: Double = 0.1 // Smanjena verovatnoća na 10%
+    private let comboTimeout: TimeInterval = 5.0 // 5 sekundi za resetovanje komba
     
     init() {
         resetGame()
@@ -97,7 +102,7 @@ class GameState: ObservableObject {
     }
     
     func generateNextNumber() -> Int {
-        if Double.random(in: 0...1) < 0.2 {
+        if Double.random(in: 0...1) < powerUpChance {
             return PowerUpType.allCases.randomElement()!.rawValue
         }
         return Int.random(in: 1...9)
@@ -184,10 +189,11 @@ class GameState: ObservableObject {
             currentCombos += 1
             maxCombo = max(maxCombo, currentCombos)
             comboMultiplier = min(currentCombos, 5)
+            lastComboTime = Date()
             
             var points = clearedLines * 100 * comboMultiplier
             if selectedMode == .timeAttack {
-                points = Int(Double(points) * 1.5) // 50% više poena u time attack modu
+                points = Int(Double(points) * 1.5)
             }
             
             score += points
@@ -207,8 +213,11 @@ class GameState: ObservableObject {
                 EffectManager.shared.showCombo(comboMultiplier)
             }
         } else {
-            currentCombos = 0
-            comboMultiplier = 1
+            // Resetuj kombo ako je prošlo više od 5 sekundi
+            if let lastCombo = lastComboTime, Date().timeIntervalSince(lastCombo) > comboTimeout {
+                currentCombos = 0
+                comboMultiplier = 1
+            }
         }
     }
     
@@ -249,26 +258,54 @@ class GameState: ObservableObject {
         }
     }
     
+    func toggleFastFall() {
+        isFastFalling.toggle()
+        if isFastFalling {
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                self?.updateFallingNumber()
+            }
+        } else {
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+                self?.updateFallingNumber()
+            }
+        }
+    }
+    
     private func endGame() {
         isGameOver = true
+        timer?.invalidate()
         gameTimer?.invalidate()
-        gameTimer = nil
+        
+        // Proveri da li je ovo savršena igra
+        if mistakes == 0 && score > 0 {
+            perfectGames += 1
+            EffectManager.shared.showAchievement(Achievement(
+                id: "perfect_game",
+                title: "Savršena igra!",
+                description: "Završio si igru bez grešaka",
+                icon: "star.fill",
+                reward: 1000,
+                isUnlocked: true,
+                dateUnlocked: Date(),
+                category: .special
+            ))
+        }
         
         // Ažuriraj statistiku
-        let isPerfect = mistakes == 0
-        let gameTime = Date().timeIntervalSince(gameStartTime ?? Date())
+        let playTime = gameStartTime.map { Date().timeIntervalSince($0) } ?? 0
+        let totalPowerUpsUsed = powerUpsUsed.values.reduce(0, +)
         
-        PlayerStatsManager.shared.updateStats(
-            gameScore: score,
-            playTime: gameTime,
-            powerUps: powerUpsUsed,
-            isPerfect: isPerfect,
-            mistakes: mistakes
-        )
-        
-        PlayerStatsManager.shared.updateGameStats(
+        AchievementManager.shared.updateProgress(
+            totalScore: score,
+            highScore: UserDefaultsManager.shared.getHighScore(),
+            gamesPlayed: 1,
+            playTime: Int(playTime),
             maxCombo: maxCombo,
-            maxLevel: level
+            maxLevel: level,
+            powerUpsUsed: totalPowerUpsUsed,
+            perfectGames: mistakes == 0 ? 1 : 0
         )
         
         // Ažuriraj izazove
@@ -276,9 +313,9 @@ class GameState: ObservableObject {
             gameScore: score,
             maxCombo: maxCombo,
             level: level,
-            powerUpsUsed: powerUpsUsed.values.reduce(0, +),
+            powerUpsUsed: totalPowerUpsUsed,
             streak: currentStreak,
-            timePlayed: gameTime
+            timePlayed: playTime
         )
         
         // Ažuriraj dostignuća
@@ -289,8 +326,8 @@ class GameState: ObservableObject {
             playTime: Int(PlayerStatsManager.shared.stats.totalPlayTime),
             maxCombo: maxCombo,
             maxLevel: level,
-            powerUpsUsed: powerUpsUsed.values.reduce(0, +),
-            perfectGames: isPerfect ? 1 : 0
+            powerUpsUsed: totalPowerUpsUsed,
+            perfectGames: mistakes == 0 ? 1 : 0
         )
         
         // Zvuk za kraj igre
