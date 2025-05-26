@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var showingPlayerStats = false
     @State private var showingChallenges = false
     @State private var showingStats = false
+    @State private var showingRules = false
     @State private var isMuted = false
     
     // Haptički feedback
@@ -50,6 +51,13 @@ struct ContentView: View {
                         showingStats = true
                     } label: {
                         Image(systemName: "chart.bar.fill")
+                            .font(.title2)
+                    }
+                    
+                    Button {
+                        showingRules = true
+                    } label: {
+                        Image(systemName: "book.fill")
                             .font(.title2)
                     }
                     
@@ -198,6 +206,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingStats) {
             PlayerStatsView()
+        }
+        .sheet(isPresented: $showingRules) {
+            GameRulesView()
         }
         .onChange(of: gameState.score) { oldValue, newValue in
             if newValue > oldValue {
