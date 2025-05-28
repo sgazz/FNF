@@ -7,43 +7,43 @@ struct PlayerStatsView: View {
     var body: some View {
         NavigationView {
             List {
-                // Osnovna statistika
-                Section(header: Text("Osnovna statistika")) {
-                    StatRow(title: "Ukupan skor", value: "\(statsManager.stats.totalScore)")
-                    StatRow(title: "Najbolji skor", value: "\(statsManager.stats.highScore)")
-                    StatRow(title: "Odigrano partija", value: "\(statsManager.stats.gamesPlayed)")
-                    StatRow(title: "Prosečan skor", value: "\(statsManager.getAverageScore())")
+                // Basic Statistics
+                Section(header: Text("Basic Statistics")) {
+                    StatRow(title: "Total Score", value: "\(statsManager.stats.totalScore)")
+                    StatRow(title: "High Score", value: "\(statsManager.stats.highScore)")
+                    StatRow(title: "Games Played", value: "\(statsManager.stats.gamesPlayed)")
+                    StatRow(title: "Average Score", value: "\(statsManager.getAverageScore())")
                 }
                 
-                // Statistika igre
-                Section(header: Text("Statistika igre")) {
-                    StatRow(title: "Najveći kombo", value: "\(statsManager.stats.maxCombo)")
-                    StatRow(title: "Najviši nivo", value: "\(statsManager.stats.maxLevel)")
-                    StatRow(title: "Savršene partije", value: "\(statsManager.stats.perfectGames)")
-                    StatRow(title: "Procenat savršenih", value: String(format: "%.1f%%", statsManager.getPerfectGamePercentage()))
+                // Game Statistics
+                Section(header: Text("Game Statistics")) {
+                    StatRow(title: "Max Combo", value: "\(statsManager.stats.maxCombo)")
+                    StatRow(title: "Highest Level", value: "\(statsManager.stats.maxLevel)")
+                    StatRow(title: "Perfect Games", value: "\(statsManager.stats.perfectGames)")
+                    StatRow(title: "Perfect Game %", value: String(format: "%.1f%%", statsManager.getPerfectGamePercentage()))
                 }
                 
-                // Statistika power-upova
-                Section(header: Text("Power-upovi")) {
+                // Power-ups Statistics
+                Section(header: Text("Power-ups")) {
                     ForEach(statsManager.stats.powerUpsUsed.sorted(by: { $0.value > $1.value }), id: \.key) { key, value in
                         StatRow(title: "\(key)", value: "\(value)")
                     }
                 }
                 
-                // Vremenska statistika
-                Section(header: Text("Vreme")) {
-                    StatRow(title: "Ukupno vreme", value: formatTime(statsManager.stats.totalPlayTime))
-                    StatRow(title: "Prosečno vreme", value: formatTime(statsManager.getAveragePlayTime()))
+                // Time Statistics
+                Section(header: Text("Time")) {
+                    StatRow(title: "Total Time", value: formatTime(statsManager.stats.totalPlayTime))
+                    StatRow(title: "Average Time", value: formatTime(statsManager.getAveragePlayTime()))
                     if let lastPlayed = statsManager.stats.lastPlayed {
-                        StatRow(title: "Poslednja igra", value: formatDate(lastPlayed))
+                        StatRow(title: "Last Played", value: formatDate(lastPlayed))
                     }
                 }
             }
-            .navigationTitle("Statistika")
+            .navigationTitle("Statistics")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Zatvori") {
+                    Button("Close") {
                         dismiss()
                     }
                 }

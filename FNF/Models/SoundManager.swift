@@ -29,7 +29,7 @@ class SoundManager {
                     player.prepareToPlay()
                     sounds[key] = player
                 } catch {
-                    print("Greška pri učitavanju zvuka \(name): \(error)")
+                    print("Error loading sound \(name): \(error)")
                 }
             }
         }

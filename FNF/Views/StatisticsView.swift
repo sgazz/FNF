@@ -7,44 +7,44 @@ struct StatisticsView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Najbolji skorovi")) {
+                Section(header: Text("High Scores")) {
                     ForEach(highScores.indices, id: \.self) { index in
                         StatRow(
-                            title: "\(index + 1). mesto",
+                            title: "\(index + 1). place",
                             value: "\(highScores[index])"
                         )
                     }
                 }
                 
-                Section(header: Text("Statistika")) {
+                Section(header: Text("Statistics")) {
                     StatRow(
-                        title: "Ukupno odigrano partija",
+                        title: "Total Games Played",
                         value: "\(UserDefaultsManager.shared.getGamesPlayed())"
                     )
                     StatRow(
-                        title: "Ukupno vreme igranja",
+                        title: "Total Play Time",
                         value: TimeFormatter.format(TimeInterval(UserDefaultsManager.shared.getTotalPlayTime() * 60))
                     )
                     StatRow(
-                        title: "Ukupan skor",
+                        title: "Total Score",
                         value: "\(UserDefaultsManager.shared.getTotalScore())"
                     )
                 }
                 
                 if let lastPlayed = UserDefaultsManager.shared.getLastPlayedDate() {
-                    Section(header: Text("Poslednja igra")) {
+                    Section(header: Text("Last Game")) {
                         StatRow(
-                            title: "Datum",
+                            title: "Date",
                             value: formatDate(lastPlayed)
                         )
                     }
                 }
             }
-            .navigationTitle("Statistika")
+            .navigationTitle("Statistics")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Zatvori") {
+                    Button("Close") {
                         dismiss()
                     }
                 }

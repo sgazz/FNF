@@ -24,7 +24,7 @@ class UserDefaultsManager {
         var highScores = getHighScores()
         highScores.append(score)
         highScores.sort(by: >)
-        highScores = Array(highScores.prefix(10)) // Čuvamo samo top 10
+        highScores = Array(highScores.prefix(10)) // Keep only top 10
         defaults.set(highScores, forKey: highScoresKey)
     }
     

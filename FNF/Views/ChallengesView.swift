@@ -15,29 +15,29 @@ struct ChallengesView: View {
                     }
                 }
                 
-                Section(header: Text("Dnevni izazovi")) {
+                Section(header: Text("Daily Challenges")) {
                     ForEach(challengeManager.dailyChallenges) { challenge in
                         ChallengeRow(challenge: challenge)
                     }
                 }
                 
-                Section(header: Text("Aktivni izazovi")) {
+                Section(header: Text("Active Challenges")) {
                     ForEach(challengeManager.activeChallenges) { challenge in
                         ChallengeRow(challenge: challenge)
                     }
                 }
                 
-                Section(header: Text("Završeni izazovi")) {
+                Section(header: Text("Completed Challenges")) {
                     ForEach(challengeManager.challenges.filter { $0.isCompleted }) { challenge in
                         ChallengeRow(challenge: challenge)
                     }
                 }
             }
-            .navigationTitle("Izazovi")
+            .navigationTitle("Challenges")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Zatvori") {
+                    Button("Close") {
                         dismiss()
                     }
                 }
@@ -56,18 +56,18 @@ struct DailyRewardView: View {
                 Image(systemName: "gift.fill")
                     .font(.title)
                     .foregroundColor(.yellow)
-                Text("Dnevna nagrada")
+                Text("Daily Reward")
                     .font(.headline)
                 Spacer()
             }
             
-            Text("+\(reward) poena")
+            Text("+\(reward) points")
                 .font(.title2)
                 .bold()
                 .foregroundColor(.green)
             
             Button(action: onClaim) {
-                Text("Preuzmi")
+                Text("Claim")
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding(.horizontal, 20)
@@ -113,13 +113,13 @@ struct ChallengeRow: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                 Spacer()
-                Text("+\(challenge.reward) poena")
+                Text("+\(challenge.reward) points")
                     .font(.caption)
                     .foregroundColor(.green)
             }
             
             if let date = challenge.dateCompleted {
-                Text("Završeno: \(formatDate(date))")
+                Text("Completed: \(formatDate(date))")
                     .font(.caption2)
                     .foregroundColor(.secondary)
             }

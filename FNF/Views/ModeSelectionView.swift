@@ -33,11 +33,11 @@ struct ModeSelectionView: View {
                     }
                 }
             }
-            .navigationTitle("Izaberi Mod")
+            .navigationTitle("Select Mode")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Zatvori") {
+                    Button("Close") {
                         dismiss()
                     }
                 }
@@ -48,22 +48,22 @@ struct ModeSelectionView: View {
     private func modeTitle(for mode: ScoreManager.GameMode) -> String {
         switch mode {
         case .classic:
-            return "Klasični Mod"
+            return "Classic Mode"
         case .timeAttack:
-            return "Mod sa Vremenom"
+            return "Time Attack Mode"
         case .zen:
-            return "Zen Mod"
+            return "Zen Mode"
         }
     }
     
     private func modeDescription(for mode: ScoreManager.GameMode) -> String {
         switch mode {
         case .classic:
-            return "Standardni mod igre sa ciljnim brojem 10"
+            return "Standard game mode with target number 10"
         case .timeAttack:
-            return "Igraj protiv vremena - 3 minuta za najviše poena"
+            return "Play against time - 3 minutes for highest score"
         case .zen:
-            return "Opuštajući mod sa nižim ciljnim brojem"
+            return "Relaxing mode with lower target number"
         }
     }
 }

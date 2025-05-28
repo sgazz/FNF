@@ -10,11 +10,11 @@ struct Achievement: Identifiable, Codable {
     let dateUnlocked: Date?
     
     enum Category: String, Codable {
-        case score = "Skor"
+        case score = "Score"
         case streak = "Streak"
-        case powerUps = "Power-upovi"
-        case time = "Vreme"
-        case special = "Specijalna"
+        case powerUps = "Power-ups"
+        case time = "Time"
+        case special = "Special"
     }
     
     let category: Category
@@ -36,11 +36,11 @@ class AchievementManager: ObservableObject {
     
     private func createDefaultAchievements() {
         achievements = [
-            // Skor dostignuća
+            // Score achievements
             Achievement(
                 id: "score_1000",
-                title: "Prvi koraci",
-                description: "Ostvari skor od 1000 poena",
+                title: "First Steps",
+                description: "Achieve a score of 1000 points",
                 icon: "star.fill",
                 reward: 100,
                 isUnlocked: false,
@@ -49,8 +49,8 @@ class AchievementManager: ObservableObject {
             ),
             Achievement(
                 id: "score_5000",
-                title: "Napredni igrač",
-                description: "Ostvari skor od 5000 poena",
+                title: "Advanced Player",
+                description: "Achieve a score of 5000 points",
                 icon: "star.fill",
                 reward: 500,
                 isUnlocked: false,
@@ -59,8 +59,8 @@ class AchievementManager: ObservableObject {
             ),
             Achievement(
                 id: "score_10000",
-                title: "Majstor",
-                description: "Ostvari skor od 10000 poena",
+                title: "Master",
+                description: "Achieve a score of 10000 points",
                 icon: "star.fill",
                 reward: 1000,
                 isUnlocked: false,
@@ -68,11 +68,11 @@ class AchievementManager: ObservableObject {
                 category: .score
             ),
             
-            // Streak dostignuća
+            // Streak achievements
             Achievement(
                 id: "streak_5",
-                title: "Vatreni",
-                description: "Ostvari streak od 5",
+                title: "On Fire",
+                description: "Achieve a streak of 5",
                 icon: "flame.fill",
                 reward: 200,
                 isUnlocked: false,
@@ -81,8 +81,8 @@ class AchievementManager: ObservableObject {
             ),
             Achievement(
                 id: "streak_10",
-                title: "Nezaustavljiv",
-                description: "Ostvari streak od 10",
+                title: "Unstoppable",
+                description: "Achieve a streak of 10",
                 icon: "flame.fill",
                 reward: 500,
                 isUnlocked: false,
@@ -90,11 +90,11 @@ class AchievementManager: ObservableObject {
                 category: .streak
             ),
             
-            // Power-up dostignuća
+            // Power-up achievements
             Achievement(
                 id: "powerups_10",
-                title: "Power-up kolekcionar",
-                description: "Iskoristi 10 power-upova",
+                title: "Power-up Collector",
+                description: "Use 10 power-ups",
                 icon: "bolt.fill",
                 reward: 300,
                 isUnlocked: false,
@@ -103,8 +103,8 @@ class AchievementManager: ObservableObject {
             ),
             Achievement(
                 id: "powerups_50",
-                title: "Power-up majstor",
-                description: "Iskoristi 50 power-upova",
+                title: "Power-up Master",
+                description: "Use 50 power-ups",
                 icon: "bolt.fill",
                 reward: 1000,
                 isUnlocked: false,
@@ -112,11 +112,11 @@ class AchievementManager: ObservableObject {
                 category: .powerUps
             ),
             
-            // Vremenska dostignuća
+            // Time achievements
             Achievement(
                 id: "time_1h",
-                title: "Početnik",
-                description: "Igraj ukupno 1 sat",
+                title: "Beginner",
+                description: "Play for a total of 1 hour",
                 icon: "clock.fill",
                 reward: 200,
                 isUnlocked: false,
@@ -125,8 +125,8 @@ class AchievementManager: ObservableObject {
             ),
             Achievement(
                 id: "time_5h",
-                title: "Posvećeni",
-                description: "Igraj ukupno 5 sati",
+                title: "Dedicated",
+                description: "Play for a total of 5 hours",
                 icon: "clock.fill",
                 reward: 1000,
                 isUnlocked: false,
@@ -134,11 +134,11 @@ class AchievementManager: ObservableObject {
                 category: .time
             ),
             
-            // Specijalna dostignuća
+            // Special achievements
             Achievement(
                 id: "perfect_game",
-                title: "Savršenstvo",
-                description: "Ostvari savršenu partiju",
+                title: "Perfection",
+                description: "Achieve a perfect game",
                 icon: "crown.fill",
                 reward: 2000,
                 isUnlocked: false,
@@ -147,8 +147,8 @@ class AchievementManager: ObservableObject {
             ),
             Achievement(
                 id: "all_achievements",
-                title: "Legenda",
-                description: "Otključaj sva dostignuća",
+                title: "Legend",
+                description: "Unlock all achievements",
                 icon: "trophy.fill",
                 reward: 5000,
                 isUnlocked: false,

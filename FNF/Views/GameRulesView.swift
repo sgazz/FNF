@@ -6,131 +6,131 @@ struct GameRulesView: View {
     var body: some View {
         NavigationView {
             List {
-                // Osnovna pravila
-                Section(header: Text("Osnovna pravila")) {
+                // Basic Rules
+                Section(header: Text("Basic Rules")) {
                     RuleRow(
-                        title: "Tabla za igru",
-                        description: "Igra se odvija na tabli od 10 redova i 6 kolona. Svaka ćelija može sadržati broj od 1-9, power-up ili biti prazna. Brojevi padaju sa vrha table i moraju se postaviti u prazne ćelije."
+                        title: "Game Board",
+                        description: "The game takes place on a board with 10 rows and 6 columns. Each cell can contain a number from 1-9, a power-up, or be empty. Numbers fall from the top of the board and must be placed in empty cells."
                     )
                     RuleRow(
-                        title: "Cilj igre",
-                        description: "Ostvari ciljni broj u redu ili koloni da bi osvojio poene. Ciljni broj se povećava sa nivoom (počinje od 10 i može doseći do 20). Svakih 500 poena napreduješ nivo."
+                        title: "Game Objective",
+                        description: "Achieve the target number in a row or column to score points. The target number increases with level (starts at 10 and can reach up to 20). Every 500 points advances you to the next level."
                     )
                     RuleRow(
-                        title: "Padajući brojevi",
-                        description: "Brojevi padaju sa vrha table. Možeš videti sledeći broj koji će pasti. Verovatnoća za power-up je 10%. Brojevi se kreću od 1 do 9."
-                    )
-                }
-                
-                // Kontrole
-                Section(header: Text("Kontrole")) {
-                    RuleRow(
-                        title: "Pomeranje",
-                        description: "Koristi strelice za pomeranje brojeva levo i desno u okviru kolone. Broj se može pomerati samo dok pada."
-                    )
-                    RuleRow(
-                        title: "Rotacija",
-                        description: "Koristi dugme za rotaciju da bi zamenio trenutni i sledeći broj. Ovo je ključna mehanika za planiranje poteza."
-                    )
-                    RuleRow(
-                        title: "Ubrzavanje",
-                        description: "Drži dugme za ubrzavanje pada broja. Brzina pada se povećava 5 puta. Koristi ovo kada želiš brže da postaviš broj."
+                        title: "Falling Numbers",
+                        description: "Numbers fall from the top of the board. You can see the next number that will fall. The chance for a power-up is 10%. Numbers range from 1 to 9."
                     )
                 }
                 
-                // Power-upovi
-                Section(header: Text("Power-upovi")) {
+                // Controls
+                Section(header: Text("Controls")) {
+                    RuleRow(
+                        title: "Movement",
+                        description: "Use arrow keys to move numbers left and right within a column. Numbers can only be moved while falling."
+                    )
+                    RuleRow(
+                        title: "Rotation",
+                        description: "Use the rotation button to swap the current and next number. This is a key mechanic for planning moves."
+                    )
+                    RuleRow(
+                        title: "Speed Up",
+                        description: "Hold the speed button to accelerate the falling number. The falling speed increases 5 times. Use this when you want to place a number faster."
+                    )
+                }
+                
+                // Power-ups
+                Section(header: Text("Power-ups")) {
                     RuleRow(
                         title: "×2 (Multiplier)",
-                        description: "Udvostručuje vrednost kombo multiplikatora. Koristi ga kada imaš dobar kombo za maksimalne poene. Efekat traje do sledećeg čišćenja."
+                        description: "Doubles the value of the combo multiplier. Use it when you have a good combo for maximum points. The effect lasts until the next clear."
                     )
                     RuleRow(
                         title: "🎲 (Randomizer)",
-                        description: "Nasumično menja sve brojeve na tabli. Koristi ga kada ti nedostaje mali broj za cilj ili kada je tabla blizu prekoračenja."
+                        description: "Randomly changes all numbers on the board. Use it when you're missing a small number for the target or when the board is close to overflowing."
                     )
                     RuleRow(
                         title: "→ (Clear Row)",
-                        description: "Briše ceo red. Koristi ga kada je red blizu ciljnog broja ili kada želiš da napraviš mesta za nove brojeve."
+                        description: "Clears an entire row. Use it when a row is close to the target number or when you want to make space for new numbers."
                     )
                     RuleRow(
                         title: "↓ (Clear Column)",
-                        description: "Briše celu kolonu. Koristi ga kada je kolona blizu ciljnog broja ili kada želiš da napraviš mesta za nove brojeve."
+                        description: "Clears an entire column. Use it when a column is close to the target number or when you want to make space for new numbers."
                     )
                 }
                 
-                // Kombo sistem
-                Section(header: Text("Kombo sistem")) {
+                // Combo System
+                Section(header: Text("Combo System")) {
                     RuleRow(
-                        title: "Kombo multiplikator",
-                        description: "Svaki uspešan potez povećava kombo multiplikator (maksimalno 5x). Kombo se resetuje ako ne očistiš nijednu liniju u roku od 5 sekundi."
+                        title: "Combo Multiplier",
+                        description: "Each successful move increases the combo multiplier (maximum 5x). The combo resets if you don't clear any lines within 5 seconds."
                     )
                     RuleRow(
-                        title: "Višestruko čišćenje",
-                        description: "Očisti više redova ili kolona odjednom za veći kombo i više poena. Svaka dodatna linija povećava kombo multiplikator."
+                        title: "Multiple Clears",
+                        description: "Clear multiple rows or columns at once for a bigger combo and more points. Each additional line increases the combo multiplier."
                     )
                     RuleRow(
-                        title: "Poeni",
-                        description: "Poeni = broj obrisanih linija × 100 × kombo multiplikator. U Time Attack modu, poeni se množe sa 1.5."
+                        title: "Points",
+                        description: "Points = number of cleared lines × 100 × combo multiplier. In Time Attack mode, points are multiplied by 1.5."
                     )
                 }
                 
-                // Režimi igre
-                Section(header: Text("Režimi igre")) {
+                // Game Modes
+                Section(header: Text("Game Modes")) {
                     RuleRow(
-                        title: "Klasični",
-                        description: "Igraj dok ne izgubiš. Ciljni broj se povećava sa nivoom. Svakih 500 poena napreduješ nivo. Brzina pada se povećava sa nivoom."
+                        title: "Classic",
+                        description: "Play until you lose. The target number increases with level. Every 500 points advances you to the next level. Falling speed increases with level."
                     )
                     RuleRow(
                         title: "Time Attack",
-                        description: "Igraj protiv vremena. Dobijaš 50% više poena. Brži je i izazovniji. Igra se završava kada istekne vreme."
+                        description: "Play against time. You get 50% more points. It's faster and more challenging. The game ends when time runs out."
                     )
                     RuleRow(
                         title: "Zen",
-                        description: "Opuštajući režim bez vremena i game over-a. Ciljni broj ostaje konstantan. Savršen za vežbanje i učenje mehanika."
+                        description: "Relaxing mode without time limit or game over. The target number remains constant. Perfect for practice and learning mechanics."
                     )
                 }
                 
-                // Saveti
-                Section(header: Text("Saveti")) {
+                // Tips
+                Section(header: Text("Tips")) {
                     RuleRow(
-                        title: "Planiranje",
-                        description: "Planiraj svoje poteze unapred. Gledaj sledeći broj i razmišljaj kako ćeš ga iskoristiti. Rotacija je ključna za dobro planiranje."
+                        title: "Planning",
+                        description: "Plan your moves ahead. Look at the next number and think about how you'll use it. Rotation is key for good planning."
                     )
                     RuleRow(
-                        title: "Power-upovi",
-                        description: "Štedi power-upove za teške situacije. ×2 je najbolji za kombo, a Randomizer za izlazak iz problema. Clear Row/Column su odlični za čišćenje mesta."
+                        title: "Power-ups",
+                        description: "Save power-ups for tough situations. ×2 is best for combos, and Randomizer for getting out of trouble. Clear Row/Column are great for making space."
                     )
                     RuleRow(
-                        title: "Kombo",
-                        description: "Pokušaj da održiš kombo što duže. Čišćenje više linija odjednom je ključ za visok skor. Imaj na umu 5-sekundni timeout za kombo."
+                        title: "Combo",
+                        description: "Try to maintain your combo as long as possible. Clearing multiple lines at once is key for high scores. Remember the 5-second combo timeout."
                     )
                     RuleRow(
-                        title: "Brzina",
-                        description: "Igra postaje brža sa nivoom. Koristi ubrzavanje pada kada je potrebno, ali budi oprezan. Brže reagovanje je ključno za visoke skorove."
+                        title: "Speed",
+                        description: "The game gets faster with level. Use speed-up when needed, but be careful. Quick reactions are crucial for high scores."
                     )
                 }
                 
                 // Game Over
                 Section(header: Text("Game Over")) {
                     RuleRow(
-                        title: "Kraj igre",
-                        description: "Igra se završava kada padajući broj ne može da se zaustavi ni u jednom redu. U Time Attack modu, igra se završava i kada istekne vreme."
+                        title: "End Game",
+                        description: "The game ends when a falling number cannot be stopped in any row. In Time Attack mode, the game also ends when time runs out."
                     )
                     RuleRow(
-                        title: "Savršena igra",
-                        description: "Završi igru bez grešaka da bi dobio dodatne poene i dostignuće. Savršena igra se računa kada ne napraviš nijednu grešku i postigneš pozitivan skor."
+                        title: "Perfect Game",
+                        description: "Complete the game without mistakes to get bonus points and achievements. A perfect game is counted when you make no mistakes and achieve a positive score."
                     )
                     RuleRow(
-                        title: "Najbolji skor",
-                        description: "Pokušaj da oboriš svoj najbolji skor. Svaka partija je nova prilika. Fokusiraj se na održavanje komba i efikasno korišćenje power-upova."
+                        title: "High Score",
+                        description: "Try to beat your high score. Each game is a new opportunity. Focus on maintaining combos and efficient use of power-ups."
                     )
                 }
             }
-            .navigationTitle("Pravila igre")
+            .navigationTitle("Game Rules")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Zatvori") {
+                    Button("Close") {
                         dismiss()
                     }
                 }

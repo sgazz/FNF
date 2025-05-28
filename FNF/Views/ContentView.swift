@@ -21,7 +21,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            // Pozadina
+            // Background
             RadialGradient(
                 gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3)]),
                 center: .center,
@@ -31,7 +31,7 @@ struct ContentView: View {
             .ignoresSafeArea()
             
             VStack(spacing: 20) {
-                // Gornji meni
+                // Top menu
                 HStack {
                     Button {
                         showingChallenges = true
@@ -81,22 +81,22 @@ struct ContentView: View {
                 }
                 .padding()
                 
-                // Skor i brojevi
+                // Score and numbers
                 HStack {
                     VStack {
-                        Text("Skor: \(gameState.score)")
+                        Text("Score: \(gameState.score)")
                             .font(.title2)
                             .bold()
-                        Text("Nivo: \(gameState.level)")
+                        Text("Level: \(gameState.level)")
                             .font(.title3)
                     }
                     
                     Spacer()
                     
                     VStack {
-                        Text("Cilj: \(gameState.targetNumber)")
+                        Text("Target: \(gameState.targetNumber)")
                             .font(.title3)
-                        Text("Kombo: x\(gameState.comboMultiplier)")
+                        Text("Combo: x\(gameState.comboMultiplier)")
                             .font(.title3)
                     }
                 }
@@ -111,7 +111,7 @@ struct ContentView: View {
                 )
                 .padding(.horizontal)
                 
-                // Preostalo vreme (samo za time attack mod)
+                // Remaining time (only for time attack mode)
                 if let remainingTime = gameState.remainingTime {
                     Text(timeString(from: remainingTime))
                         .font(.title)
@@ -119,12 +119,12 @@ struct ContentView: View {
                         .foregroundColor(remainingTime <= 30 ? .red : .primary)
                 }
                 
-                // Tabla za igru
+                // Game board
                 GameBoardView(gameState: gameState)
                     .frame(height: 400)
                     .padding()
                 
-                // Kontrole
+                // Controls
                 HStack(spacing: 30) {
                     Button(action: {
                         impactGenerator.impactOccurred()
@@ -281,11 +281,11 @@ struct GameOverView: View {
                     .font(.largeTitle)
                     .bold()
                 
-                Text("Skor: \(score)")
+                Text("Score: \(score)")
                     .font(.title)
                 
                 Button(action: onPlayAgain) {
-                    Text("Igraj ponovo")
+                    Text("Play Again")
                         .font(.title2)
                         .bold()
                         .padding()

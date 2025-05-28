@@ -4,7 +4,7 @@ struct ComboEffectView: View {
     let multiplier: Int
     
     var body: some View {
-        Text("\(multiplier)x KOMBO!")
+        Text("\(multiplier)x COMBO!")
             .font(.system(size: 40, weight: .bold))
             .foregroundColor(.white)
             .shadow(color: .black, radius: 2)
@@ -18,12 +18,12 @@ struct LevelUpEffectView: View {
     
     var body: some View {
         VStack {
-            Text("NIVO \(level)!")
+            Text("LEVEL \(level)!")
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(.white)
                 .shadow(color: .black, radius: 2)
             
-            Text("Novi cilj: \(level * 2)")
+            Text("New target: \(level * 2)")
                 .font(.title2)
                 .foregroundColor(.white)
                 .shadow(color: .black, radius: 2)
@@ -54,7 +54,7 @@ struct AchievementEffectView: View {
                 .font(.system(size: 40))
                 .foregroundColor(.yellow)
             
-            Text("Dostignuće otključano!")
+            Text("Achievement Unlocked!")
                 .font(.headline)
                 .foregroundColor(.white)
             
@@ -63,7 +63,7 @@ struct AchievementEffectView: View {
                 .bold()
                 .foregroundColor(.white)
             
-            Text("+\(achievement.reward) poena")
+            Text("+\(achievement.reward) points")
                 .font(.title3)
                 .foregroundColor(.green)
         }

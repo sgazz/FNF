@@ -49,21 +49,21 @@ class ScoreManager {
     
     private var defaultAchievements: [Achievement] {
         [
-            Achievement(id: "first_game", title: "Prva igra", description: "Završi svoju prvu igru", isUnlocked: false, dateUnlocked: nil),
-            Achievement(id: "score_1000", title: "Početnik", description: "Ostvari 1000 poena", isUnlocked: false, dateUnlocked: nil),
-            Achievement(id: "score_5000", title: "Napredni", description: "Ostvari 5000 poena", isUnlocked: false, dateUnlocked: nil),
-            Achievement(id: "score_10000", title: "Majstor", description: "Ostvari 10000 poena", isUnlocked: false, dateUnlocked: nil),
-            Achievement(id: "combo_3", title: "Kombo majstor", description: "Ostvari 3x kombo", isUnlocked: false, dateUnlocked: nil),
-            Achievement(id: "combo_5", title: "Kombo legenda", description: "Ostvari 5x kombo", isUnlocked: false, dateUnlocked: nil),
-            Achievement(id: "level_5", title: "Napredak", description: "Dostigni nivo 5", isUnlocked: false, dateUnlocked: nil),
-            Achievement(id: "level_10", title: "Ekspert", description: "Dostigni nivo 10", isUnlocked: false, dateUnlocked: nil)
+            Achievement(id: "first_game", title: "First Game", description: "Complete your first game", isUnlocked: false, dateUnlocked: nil),
+            Achievement(id: "score_1000", title: "Beginner", description: "Achieve 1000 points", isUnlocked: false, dateUnlocked: nil),
+            Achievement(id: "score_5000", title: "Advanced", description: "Achieve 5000 points", isUnlocked: false, dateUnlocked: nil),
+            Achievement(id: "score_10000", title: "Master", description: "Achieve 10000 points", isUnlocked: false, dateUnlocked: nil),
+            Achievement(id: "combo_3", title: "Combo Master", description: "Achieve 3x combo", isUnlocked: false, dateUnlocked: nil),
+            Achievement(id: "combo_5", title: "Combo Legend", description: "Achieve 5x combo", isUnlocked: false, dateUnlocked: nil),
+            Achievement(id: "level_5", title: "Progress", description: "Reach level 5", isUnlocked: false, dateUnlocked: nil),
+            Achievement(id: "level_10", title: "Expert", description: "Reach level 10", isUnlocked: false, dateUnlocked: nil)
         ]
     }
     
     func checkAchievements(score: Int, level: Int, maxCombo: Int) {
         var updatedAchievements = achievements
         
-        // Proveri dostignuća za skor
+        // Check score achievements
         if score >= 1000 {
             unlockAchievement(id: "score_1000", in: &updatedAchievements)
         }
@@ -74,7 +74,7 @@ class ScoreManager {
             unlockAchievement(id: "score_10000", in: &updatedAchievements)
         }
         
-        // Proveri dostignuća za kombo
+        // Check combo achievements
         if maxCombo >= 3 {
             unlockAchievement(id: "combo_3", in: &updatedAchievements)
         }
@@ -82,7 +82,7 @@ class ScoreManager {
             unlockAchievement(id: "combo_5", in: &updatedAchievements)
         }
         
-        // Proveri dostignuća za nivo
+        // Check level achievements
         if level >= 5 {
             unlockAchievement(id: "level_5", in: &updatedAchievements)
         }
@@ -117,7 +117,7 @@ class ScoreManager {
             case .classic:
                 return (10, nil)
             case .timeAttack:
-                return (15, 180) // 3 minuta
+                return (15, 180) // 3 minutes
             case .zen:
                 return (8, nil)
             }

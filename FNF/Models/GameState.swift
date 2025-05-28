@@ -53,8 +53,8 @@ class GameState: ObservableObject {
     private var gameStartTime: Date?
     private var mistakes: Int = 0
     private var currentStreak: Int = 0
-    private let powerUpChance: Double = 0.1 // Smanjena verovatnoća na 10%
-    private let comboTimeout: TimeInterval = 5.0 // 5 sekundi za resetovanje komba
+    private let powerUpChance: Double = 0.1 // Reduced probability to 10%
+    private let comboTimeout: TimeInterval = 5.0 // 5 seconds to reset combo
     
     init() {
         resetGame()
@@ -102,7 +102,7 @@ class GameState: ObservableObject {
     }
     
     func generateNextNumber() -> Int {
-        // Povećavamo verovatnoću za power-up na 20% radi testiranja
+        // Increased power-up probability to 20% for testing
         if Double.random(in: 0...1) < 0.2 {
             let powerUp = PowerUpType.allCases.randomElement()!
             print("Generated power-up: \(powerUp.symbol)") // Debug print
@@ -116,9 +116,9 @@ class GameState: ObservableObject {
     func moveLeft() {
         guard fallingPosition.column > 0 else { return }
         fallingPosition.column -= 1
-        // Proveri koliziju nakon pomeranja
+        // Check collision after movement
         if checkCollision() {
-            fallingPosition.column += 1 // Vrati se na prethodnu poziciju
+            fallingPosition.column += 1 // Return to previous position
         }
         SoundManager.shared.playSound("move")
     }
@@ -126,9 +126,9 @@ class GameState: ObservableObject {
     func moveRight() {
         guard fallingPosition.column < Self.columns - 1 else { return }
         fallingPosition.column += 1
-        // Proveri koliziju nakon pomeranja
+        // Check collision after movement
         if checkCollision() {
-            fallingPosition.column -= 1 // Vrati se na prethodnu poziciju
+            fallingPosition.column -= 1 // Return to previous position
         }
         SoundManager.shared.playSound("move")
     }
@@ -141,77 +141,77 @@ class GameState: ObservableObject {
     }
     
     func checkCollision() -> Bool {
-        // Proveri da li je trenutna pozicija van table
+        // Check if current position is outside the table
         if fallingPosition.row >= Self.rows || fallingPosition.column >= Self.columns {
             return true
         }
         
-        // Proveri da li je trenutna pozicija prazna
+        // Check if current position is empty
         if board[fallingPosition.row][fallingPosition.column] != 0 {
             return true
         }
         
-        // Proveri da li je sledeća pozicija van table
+        // Check if next position is outside the table
         let nextRow = fallingPosition.row + 1
         if nextRow >= Self.rows {
             return true
         }
         
-        // Proveri da li je sledeća pozicija prazna
+        // Check if next position is empty
         return board[nextRow][fallingPosition.column] != 0
     }
     
     func updateFallingNumber() {
-        // Proveri da li je trenutna pozicija van table
+        // Check if current position is outside the table
         if fallingPosition.row >= Self.rows || fallingPosition.column >= Self.columns {
             endGame()
             return
         }
         
         if checkCollision() {
-            // Proveri da li je trenutna pozicija prazna
+            // Check if current position is empty
             if board[fallingPosition.row][fallingPosition.column] == 0 {
                 print("Collision detected at position: \(fallingPosition)") // Debug print
                 print("Falling number: \(fallingNumber)") // Debug print
                 
-                // Fiksiraj broj na tabli
+                // Fix number on the board
                 board[fallingPosition.row][fallingPosition.column] = fallingNumber
                 print("Board after placing number:") // Debug print
                 printBoard() // Debug print
                 
-                // Proveri da li je power-up
+                // Check if power-up
                 if fallingNumber < 0, let powerUp = PowerUpType(rawValue: fallingNumber) {
                     handlePowerUp(powerUp, at: fallingPosition)
                 }
                 
                 SoundManager.shared.playSound("drop")
                 
-                // Proveri redove i kolone dok ima šta za čišćenje
+                // Check rows and columns until there's nothing to clear
                 var hasClearedLines = true
                 while hasClearedLines {
                     hasClearedLines = checkRowsAndColumns()
                 }
                 
-                // Postavi novi padajući broj
+                // Set new falling number
                 fallingPosition = Position(row: 0, column: 2)
                 fallingNumber = nextNumber
                 nextNumber = generateNextNumber()
                 
-                // Proveri game over
+                // Check game over
                 if checkCollision() {
                     endGame()
                 }
             } else {
-                // Ako trenutna pozicija nije prazna, pomeri broj na sledeću poziciju
+                // If current position is not empty, move number to next position
                 fallingPosition.row += 1
-                // Proveri da li je nova pozicija van table
+                // Check if new position is outside the table
                 if fallingPosition.row >= Self.rows {
                     endGame()
                 }
             }
         } else {
             fallingPosition.row += 1
-            // Proveri da li je nova pozicija van table
+            // Check if new position is outside the table
             if fallingPosition.row >= Self.rows {
                 endGame()
             }
@@ -236,18 +236,18 @@ class GameState: ObservableObject {
     func checkRowsAndColumns() -> Bool {
         var clearedLines = 0
         
-        // Proveri sve moguće horizontalne sume
+        // Check all possible horizontal sums
         for row in 0..<Self.rows {
             for startCol in 0..<Self.columns {
                 var sum = 0
                 var endCol = startCol
                 
-                // Saberi brojeve dok ne dostigneš ciljni broj ili ne dođeš do kraja reda
+                // Sum numbers until you reach the target number or reach the end of the row
                 while endCol < Self.columns {
                     if board[row][endCol] > 0 {
                         sum += board[row][endCol]
                         if sum == targetNumber {
-                            // Očisti sve brojeve u ovom nizu
+                            // Clear all numbers in this range
                             for col in startCol...endCol {
                                 board[row][col] = 0
                             }
@@ -263,18 +263,18 @@ class GameState: ObservableObject {
             }
         }
         
-        // Proveri sve moguće vertikalne sume
+        // Check all possible vertical sums
         for col in 0..<Self.columns {
             for startRow in 0..<Self.rows {
                 var sum = 0
                 var endRow = startRow
                 
-                // Saberi brojeve dok ne dostigneš ciljni broj ili ne dođeš do kraja kolone
+                // Sum numbers until you reach the target number or reach the end of the column
                 while endRow < Self.rows {
                     if board[endRow][col] > 0 {
                         sum += board[endRow][col]
                         if sum == targetNumber {
-                            // Očisti sve brojeve u ovom nizu
+                            // Clear all numbers in this range
                             for row in startRow...endRow {
                                 board[row][col] = 0
                             }
@@ -290,7 +290,7 @@ class GameState: ObservableObject {
             }
         }
         
-        // Ažuriraj kombo i skor
+        // Update combo and score
         if clearedLines > 0 {
             print("Cleared \(clearedLines) lines") // Debug print
             currentCombos += 1
@@ -306,7 +306,7 @@ class GameState: ObservableObject {
             score += points
             print("Added \(points) points, new score: \(score)") // Debug print
             
-            // Proveri napredak nivoa
+            // Check level progress
             if score >= level * 500 {
                 level += 1
                 if selectedMode != .zen {
@@ -316,22 +316,22 @@ class GameState: ObservableObject {
                 print("Level up! New level: \(level), new target: \(targetNumber)") // Debug print
             }
             
-            // Zvuk i efekat za kombo
+            // Sound and effect for combo
             if currentCombos > 1 {
                 SoundManager.shared.playSound("combo")
                 EffectManager.shared.showCombo(comboMultiplier)
                 print("Combo: \(currentCombos)x, multiplier: \(comboMultiplier)") // Debug print
             }
             
-            return true // Vraćamo true ako je bilo čišćenja
+            return true // Return true if there was clearing
         } else {
-            // Resetuj kombo ako je prošlo više od 5 sekundi
+            // Reset combo if more than 5 seconds have passed
             if let lastCombo = lastComboTime, Date().timeIntervalSince(lastCombo) > comboTimeout {
                 currentCombos = 0
                 comboMultiplier = 1
                 print("Combo reset due to timeout") // Debug print
             }
-            return false // Vraćamo false ako nije bilo čišćenja
+            return false // Return false if there was no clearing
         }
     }
     
@@ -357,7 +357,7 @@ class GameState: ObservableObject {
         lastPowerUp = powerUp
         SoundManager.shared.playSound("powerup")
         
-        // Ažuriraj broj korišćenih power-upova
+        // Update number of used power-ups
         powerUpsUsed[powerUp, default: 0] += 1
         
         switch powerUp {
@@ -402,13 +402,13 @@ class GameState: ObservableObject {
         timer?.invalidate()
         gameTimer?.invalidate()
         
-        // Proveri da li je ovo savršena igra
+        // Check if this was a perfect game
         if mistakes == 0 && score > 0 {
             perfectGames += 1
             EffectManager.shared.showAchievement(Achievement(
                 id: "perfect_game",
-                title: "Savršena igra!",
-                description: "Završio si igru bez grešaka",
+                title: "Perfect game!",
+                description: "Completed the game without mistakes",
                 icon: "star.fill",
                 reward: 1000,
                 isUnlocked: true,
@@ -417,7 +417,7 @@ class GameState: ObservableObject {
             ))
         }
         
-        // Ažuriraj statistiku
+        // Update statistics
         let playTime = gameStartTime.map { Date().timeIntervalSince($0) } ?? 0
         let totalPowerUpsUsed = powerUpsUsed.values.reduce(0, +)
         
@@ -432,7 +432,7 @@ class GameState: ObservableObject {
             perfectGames: mistakes == 0 ? 1 : 0
         )
         
-        // Ažuriraj izazove
+        // Update challenges
         ChallengeManager.shared.updateProgress(
             gameScore: score,
             maxCombo: maxCombo,
@@ -442,7 +442,7 @@ class GameState: ObservableObject {
             timePlayed: playTime
         )
         
-        // Ažuriraj dostignuća
+        // Update achievements
         AchievementManager.shared.updateProgress(
             totalScore: PlayerStatsManager.shared.stats.totalScore,
             highScore: PlayerStatsManager.shared.stats.highScore,
@@ -454,7 +454,7 @@ class GameState: ObservableObject {
             perfectGames: mistakes == 0 ? 1 : 0
         )
         
-        // Zvuk za kraj igre
+        // Game over sound
         SoundManager.shared.playSound("gameover")
     }
     

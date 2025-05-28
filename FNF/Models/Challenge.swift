@@ -101,8 +101,8 @@ class ChallengeManager: ObservableObject {
         case .score:
             let target = Int.random(in: 1000...5000)
             return Challenge(
-                title: "Dnevni skor",
-                description: "Ostvari \(target) poena",
+                title: "Daily Score",
+                description: "Achieve \(target) points",
                 type: type,
                 target: target,
                 reward: target / 10
@@ -110,8 +110,8 @@ class ChallengeManager: ObservableObject {
         case .combo:
             let target = Int.random(in: 3...7)
             return Challenge(
-                title: "Dnevni kombo",
-                description: "Ostvari \(target)x kombo",
+                title: "Daily Combo",
+                description: "Achieve \(target)x combo",
                 type: type,
                 target: target,
                 reward: target * 50
@@ -119,8 +119,8 @@ class ChallengeManager: ObservableObject {
         case .level:
             let target = Int.random(in: 2...5)
             return Challenge(
-                title: "Dnevni nivo",
-                description: "Dostigni nivo \(target)",
+                title: "Daily Level",
+                description: "Reach level \(target)",
                 type: type,
                 target: target,
                 reward: target * 100

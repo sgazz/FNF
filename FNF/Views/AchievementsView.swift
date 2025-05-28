@@ -16,11 +16,11 @@ struct AchievementsView: View {
                     }
                 }
             }
-            .navigationTitle("Dostignuća")
+            .navigationTitle("Achievements")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Zatvori") {
+                    Button("Close") {
                         dismiss()
                     }
                 }

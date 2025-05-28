@@ -25,7 +25,7 @@ class PlayerProgress: ObservableObject {
     }
     
     func updateProgress(gameScore: Int, level: Int, maxCombo: Int, powerUps: [PowerUpType: Int], timePlayed: TimeInterval) {
-        // Ažuriraj streak
+        // Update streak
         if gameScore > 0 {
             currentStreak += 1
             bestStreak = max(bestStreak, currentStreak)
@@ -33,15 +33,15 @@ class PlayerProgress: ObservableObject {
             currentStreak = 0
         }
         
-        // Ažuriraj najviši kombo
+        // Update highest combo
         highestCombo = max(highestCombo, maxCombo)
         
-        // Ažuriraj power-up statistiku
+        // Update power-up statistics
         for (type, count) in powerUps {
             powerUpsUsed[type, default: 0] += count
         }
         
-        // Ažuriraj najbrže dostignut nivo
+        // Update fastest level reached
         if level > 1 {
             let timePerLevel = timePlayed / Double(level)
             if fastestLevelUp == nil || timePerLevel < fastestLevelUp! {
