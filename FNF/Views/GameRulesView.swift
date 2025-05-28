@@ -220,5 +220,18 @@ struct RuleRow: View {
 }
 
 #Preview {
-    GameRulesView()
+    VStack {
+        GameRulesView()
+        
+        Divider()
+            .background(Color.gray)
+            .padding()
+        
+        RuleRow(
+            title: "Test Rule",
+            description: "This is a test rule description that shows how the rule row looks."
+        )
+        .padding()
+    }
+    .background(Color.black)
 } 

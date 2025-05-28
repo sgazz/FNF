@@ -26,6 +26,12 @@ struct StatRow: View {
     }
 }
 
+#Preview {
+    StatRow(title: "Score", value: "1000")
+        .padding()
+        .background(Color.black)
+}
+
 struct TimeFormatter {
     static func format(_ timeInterval: TimeInterval) -> String {
         let hours = Int(timeInterval) / 3600

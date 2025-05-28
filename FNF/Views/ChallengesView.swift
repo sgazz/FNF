@@ -178,5 +178,21 @@ struct ChallengeRow: View {
 }
 
 #Preview {
-    ChallengesView()
+    VStack {
+        ChallengesView()
+        
+        Divider()
+            .background(Color.gray)
+            .padding()
+        
+        ChallengeRow(challenge: Challenge(
+            title: "Test Challenge",
+            description: "Test Description",
+            type: .score,
+            target: 1000,
+            reward: 100
+        ))
+        .padding()
+    }
+    .background(Color.black)
 } 

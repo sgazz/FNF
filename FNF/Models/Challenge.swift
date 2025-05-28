@@ -293,22 +293,22 @@ class ChallengeManager: ObservableObject {
                 type: .score,
                 target: 1000,
                 reward: 100,
-                title: "Početnik",
-                description: "Ostvari 1000 poena"
+                title: "Beginner",
+                description: "Score 1000 points"
             ),
             createChallenge(
                 type: .combo,
                 target: 3,
                 reward: 50,
-                title: "Kombo majstor",
-                description: "Ostvari 3x kombo"
+                title: "Combo Master",
+                description: "Achieve 3x combo"
             ),
             createChallenge(
                 type: .powerUps,
                 target: 5,
                 reward: 75,
-                title: "Power-up kolekcionar",
-                description: "Iskoristi 5 power-upova"
+                title: "Power-up Collector",
+                description: "Use 5 power-ups"
             )
         ]
         saveChallenges()

@@ -35,36 +35,16 @@ struct ContentView: View {
                 VStack(spacing: 40) {
                     Spacer()
                     
-                    ZStack { // ZStack za slojeve oko logotipa
-                        Circle()
-                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange, Color.yellow]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 30) // Spoljašnji zlatni prsten
-                            .frame(width: 300, height: 300)
-                            .shadow(color: .yellow.opacity(0.8), radius: 20, x: 0, y: 0)
-                        
-                        Circle()
-                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.7), Color.yellow.opacity(0.5), Color.clear]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 5) // Svetlija zlatna ivica
-                            .frame(width: 260, height: 260)
-                            .shadow(color: .white.opacity(0.5), radius: 10, x: 0, y: 0)
-                        
-                        Image("GameLogo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 250, height: 250)
-                            .shadow(color: .yellow.opacity(0.5), radius: 20, x: 0, y: 0)
-                    }
-                    
-                    // Dodavanje teksta "ARENA"
-                    Text("ARENA")
+                    Text("Fall Number...Fall!")
                         .font(.system(size: 40, weight: .bold, design: .rounded))
                         .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
                         .shadow(color: .yellow.opacity(0.5), radius: 10, x: 0, y: 5)
                     
-                    Button("Start Game") {
-                        isShowingMainMenu = false
-                        gameState.resetGame()
+                    Button("Rules") {
+                        showingRules = true
                     }
                     .font(.title2)
-                    .padding(.horizontal, 40)
+                    .frame(width: 250)
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -81,7 +61,7 @@ struct ContentView: View {
                         showingModeSelection = true
                     }
                     .font(.title2)
-                    .padding(.horizontal, 40)
+                    .frame(width: 250)
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -98,7 +78,7 @@ struct ContentView: View {
                         showingStats = true
                     }
                     .font(.title2)
-                    .padding(.horizontal, 40)
+                    .frame(width: 250)
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -111,11 +91,46 @@ struct ContentView: View {
                     )
                     .foregroundColor(.white)
                     
-                    Button("Rules") {
-                        showingRules = true
+                    Button("Achievements") {
+                        showingAchievements = true
                     }
                     .font(.title2)
-                    .padding(.horizontal, 40)
+                    .frame(width: 250)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.black.opacity(0.6))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                            )
+                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                    )
+                    .foregroundColor(.white)
+                    
+                    Button("Challenges") {
+                        showingChallenges = true
+                    }
+                    .font(.title2)
+                    .frame(width: 250)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.black.opacity(0.6))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                            )
+                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                    )
+                    .foregroundColor(.white)
+                    
+                    Button("Start Game") {
+                        isShowingMainMenu = false
+                        gameState.resetGame()
+                    }
+                    .font(.title2)
+                    .frame(width: 250)
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -138,7 +153,7 @@ struct ContentView: View {
                             Text(isMuted ? "Unmute" : "Mute")
                                 .font(.title2)
                         }
-                        .padding(.horizontal, 40)
+                        .frame(width: 250)
                         .padding(.vertical, 15)
                         .background(
                             RoundedRectangle(cornerRadius: 10)

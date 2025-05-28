@@ -109,4 +109,24 @@ struct AchievementEffectView: View {
         )
         .transition(.scale.combined(with: .opacity))
     }
+}
+
+#Preview {
+    VStack(spacing: 20) {
+        ComboEffectView(multiplier: 3)
+        LevelUpEffectView(level: 5)
+        ScoreEffectView(score: 1000)
+        AchievementEffectView(achievement: Achievement(
+            id: "test",
+            title: "Test Achievement",
+            description: "Test Description",
+            icon: "star.fill",
+            reward: 100,
+            isUnlocked: true,
+            dateUnlocked: Date(),
+            category: .score
+        ))
+    }
+    .padding()
+    .background(Color.black)
 } 
