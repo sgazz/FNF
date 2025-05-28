@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var showingStats = false
     @State private var showingRules = false
     @State private var isMuted = false
+    @State private var isShowingMainMenu = true
     
     // Haptički feedback
     private let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -21,172 +22,269 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            // Background
+            // Background - updated to darker gradient
             RadialGradient(
-                gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3)]),
+                gradient: Gradient(colors: [Color.black.opacity(0.8), Color.black]),
                 center: .center,
-                startRadius: 100,
-                endRadius: 400
+                startRadius: 10,
+                endRadius: 500
             )
             .ignoresSafeArea()
             
-            VStack(spacing: 20) {
-                // Top menu
-                HStack {
-                    Button {
-                        showingChallenges = true
-                    } label: {
-                        Image(systemName: "trophy.fill")
-                            .font(.title2)
+            if isShowingMainMenu {
+                VStack(spacing: 40) {
+                    Spacer()
+                    
+                    ZStack { // ZStack za slojeve oko logotipa
+                        Circle()
+                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange, Color.yellow]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 30) // Spoljašnji zlatni prsten
+                            .frame(width: 300, height: 300)
+                            .shadow(color: .yellow.opacity(0.8), radius: 20, x: 0, y: 0)
+                        
+                        Circle()
+                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.7), Color.yellow.opacity(0.5), Color.clear]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 5) // Svetlija zlatna ivica
+                            .frame(width: 260, height: 260)
+                            .shadow(color: .white.opacity(0.5), radius: 10, x: 0, y: 0)
+                        
+                        Image("GameLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 250, height: 250)
+                            .shadow(color: .yellow.opacity(0.5), radius: 20, x: 0, y: 0)
                     }
                     
-                    Button {
-                        showingAchievements = true
-                    } label: {
-                        Image(systemName: "star.fill")
-                            .font(.title2)
-                    }
+                    // Dodavanje teksta "ARENA"
+                    Text("ARENA")
+                        .font(.system(size: 40, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                        .shadow(color: .yellow.opacity(0.5), radius: 10, x: 0, y: 5)
                     
-                    Button {
+                    Button("Start Game") {
+                        isShowingMainMenu = false
+                        gameState.resetGame()
+                    }
+                    .font(.title2)
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.black.opacity(0.6))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                            )
+                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                    )
+                    .foregroundColor(.white)
+                    
+                    Button("Mode Selection") {
+                        showingModeSelection = true
+                    }
+                    .font(.title2)
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.black.opacity(0.6))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                            )
+                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                    )
+                    .foregroundColor(.white)
+                    
+                    Button("Statistics") {
                         showingStats = true
-                    } label: {
-                        Image(systemName: "chart.bar.fill")
-                            .font(.title2)
                     }
+                    .font(.title2)
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.black.opacity(0.6))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                            )
+                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                    )
+                    .foregroundColor(.white)
                     
-                    Button {
+                    Button("Rules") {
                         showingRules = true
-                    } label: {
-                        Image(systemName: "book.fill")
-                            .font(.title2)
                     }
+                    .font(.title2)
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.black.opacity(0.6))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                            )
+                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                    )
+                    .foregroundColor(.white)
                     
-                    Button(action: { showingModeSelection = true }) {
-                        Image(systemName: "gamecontroller")
-                            .font(.title2)
-                    }
-                    Spacer()
-                    Button(action: { showingStatistics = true }) {
-                        Image(systemName: "chart.bar")
-                            .font(.title2)
-                    }
-                    Spacer()
                     Button(action: {
                         isMuted.toggle()
                         SoundManager.shared.setMute(isMuted)
                     }) {
-                        Image(systemName: isMuted ? "speaker.slash" : "speaker.wave.2")
-                            .font(.title2)
-                    }
-                }
-                .padding()
-                
-                // Score and numbers
-                HStack {
-                    VStack {
-                        Text("Score: \(gameState.score)")
-                            .font(.title2)
-                            .bold()
-                        Text("Level: \(gameState.level)")
-                            .font(.title3)
+                        HStack {
+                            Image(systemName: isMuted ? "speaker.slash" : "speaker.wave.2")
+                                .font(.title2)
+                            Text(isMuted ? "Unmute" : "Mute")
+                                .font(.title2)
+                        }
+                        .padding(.horizontal, 40)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.black.opacity(0.6))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                        )
+                        .foregroundColor(.white)
                     }
                     
                     Spacer()
-                    
-                    VStack {
-                        Text("Target: \(gameState.targetNumber)")
-                            .font(.title3)
-                        Text("Combo: x\(gameState.comboMultiplier)")
-                            .font(.title3)
+                }
+            } else {
+                VStack(spacing: 20) {
+                    // Top menu - remove system icons if they are replaced by main menu buttons
+                    HStack {
+                        Spacer()
                     }
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.white.opacity(0.2))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color.white.opacity(0.5), lineWidth: 2)
-                        )
-                )
-                .padding(.horizontal)
-                
-                // Remaining time (only for time attack mode)
-                if let remainingTime = gameState.remainingTime {
-                    Text(timeString(from: remainingTime))
-                        .font(.title)
-                        .bold()
-                        .foregroundColor(remainingTime <= 30 ? .red : .primary)
-                }
-                
-                // Game board
-                GameBoardView(gameState: gameState)
-                    .frame(height: 400)
                     .padding()
-                
-                // Controls
-                HStack(spacing: 30) {
-                    Button(action: {
-                        impactGenerator.impactOccurred()
-                        gameState.moveLeft()
-                    }) {
-                        Image(systemName: "arrow.left")
+                    
+                    // Score and numbers - apply gold border and glow
+                    HStack {
+                        VStack {
+                            Text("Score: \(gameState.score)")
+                                .font(.title2)
+                                .bold()
+                            Text("Level: \(gameState.level)")
+                                .font(.title3)
+                        }
+                        
+                        Spacer()
+                        
+                        VStack {
+                            Text("Target: \(gameState.targetNumber)")
+                                .font(.title3)
+                            Text("Combo: x\(gameState.comboMultiplier)")
+                                .font(.title3)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.black.opacity(0.4)) // Tamnija pozadina
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3) // Zlatna ivica
+                            )
+                            .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0) // Zlatni sjaj
+                    )
+                    .padding(.horizontal)
+                    
+                    // Remaining time (only for time attack mode)
+                    if let remainingTime = gameState.remainingTime {
+                        Text(timeString(from: remainingTime))
                             .font(.title)
-                            .padding()
-                            .background(Circle().fill(Color.white.opacity(0.2)))
+                            .bold()
+                            .foregroundColor(remainingTime <= 30 ? .red : .primary)
                     }
                     
-                    Button(action: {
-                        impactGenerator.impactOccurred()
-                        gameState.rotate()
-                    }) {
-                        Image(systemName: "arrow.2.squarepath")
-                            .font(.title)
-                            .padding()
-                            .background(Circle().fill(Color.white.opacity(0.2)))
-                    }
+                    // Game board
+                    GameBoardView(gameState: gameState)
+                        .frame(height: 400)
+                        .padding()
                     
-                    Button(action: {
-                        impactGenerator.impactOccurred()
-                        gameState.moveRight()
-                    }) {
-                        Image(systemName: "arrow.right")
-                            .font(.title)
-                            .padding()
-                            .background(Circle().fill(Color.white.opacity(0.2)))
+                    // Controls - apply gold border and glow to buttons
+                    HStack(spacing: 30) {
+                        Button(action: {
+                            impactGenerator.impactOccurred()
+                            gameState.moveLeft()
+                        }) {
+                            Image(systemName: "arrow.left")
+                                .font(.title)
+                                .padding()
+                                .background(Circle().fill(Color.black.opacity(0.4)))
+                                .overlay(
+                                    Circle()
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
+                        }
+                        
+                        Button(action: {
+                            impactGenerator.impactOccurred()
+                            gameState.rotate()
+                        }) {
+                            Image(systemName: "arrow.2.squarepath")
+                                .font(.title)
+                                .padding()
+                                .background(Circle().fill(Color.black.opacity(0.4)))
+                                .overlay(
+                                    Circle()
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
+                        }
+                        
+                        Button(action: {
+                            impactGenerator.impactOccurred()
+                            gameState.moveRight()
+                        }) {
+                            Image(systemName: "arrow.right")
+                                .font(.title)
+                                .padding()
+                                .background(Circle().fill(Color.black.opacity(0.4)))
+                                .overlay(
+                                    Circle()
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
+                        }
                     }
+                    .padding()
                 }
-                .padding()
-            }
-            
-            // Game Over overlay
-            if gameState.isGameOver {
-                GameOverView(score: gameState.score, onPlayAgain: {
-                    notificationGenerator.notificationOccurred(.success)
-                    SoundManager.shared.playSound("gameover")
-                    gameState.resetGame()
-                    showingGameOver = false
-                })
-            }
-            
-            // Vizuelni efekti
-            if effectManager.showingCombo {
-                ComboEffectView(multiplier: effectManager.comboMultiplier)
-                    .transition(.scale.combined(with: .opacity))
-            }
-            
-            if effectManager.showingLevelUp {
-                LevelUpEffectView(level: effectManager.level)
-                    .transition(.scale.combined(with: .opacity))
-            }
-            
-            if effectManager.showingScore {
-                ScoreEffectView(score: effectManager.score)
-                    .transition(.scale.combined(with: .opacity))
-            }
-            
-            if effectManager.showingAchievement, let achievement = effectManager.achievement {
-                AchievementEffectView(achievement: achievement)
+                
+                // Game Over overlay
+                if gameState.isGameOver {
+                    GameOverView(score: gameState.score, onPlayAgain: {
+                        notificationGenerator.notificationOccurred(.success)
+                        SoundManager.shared.playSound("gameover")
+                        gameState.resetGame()
+                        showingGameOver = false
+                    })
+                }
+                
+                // Vizuelni efekti
+                if effectManager.showingCombo {
+                    ComboEffectView(multiplier: effectManager.comboMultiplier)
+                        .transition(.scale.combined(with: .opacity))
+                }
+                
+                if effectManager.showingLevelUp {
+                    LevelUpEffectView(level: effectManager.level)
+                        .transition(.scale.combined(with: .opacity))
+                }
+                
+                if effectManager.showingScore {
+                    ScoreEffectView(score: effectManager.score)
+                        .transition(.scale.combined(with: .opacity))
+                }
+                
+                if effectManager.showingAchievement, let achievement = effectManager.achievement {
+                    AchievementEffectView(achievement: achievement)
+                }
             }
         }
         .sheet(isPresented: $showingModeSelection) {
@@ -238,18 +336,25 @@ struct CellView: View {
     
     var body: some View {
         ZStack {
-            Rectangle()
-                .fill(cellColor)
+            RoundedRectangle(cornerRadius: 8) // Više zaobljeni uglovi
+                .fill(cellColor.opacity(value == 0 ? 0.1 : 0.6)) // Smanjena neprovidnost pozadine ćelije, malo tamnije
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8) // Manji zaobljeni uglovi za ćelije
+                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow.opacity(0.8), Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: value == 0 ? 1 : 2) // Zlatna ivica (tanja za prazne ćelije), manja neprovidnost gradijenta
+                )
+                .shadow(color: .yellow.opacity(value == 0 ? 0.1 : 0.4), radius: value == 0 ? 3 : 6, x: 0, y: 0) // Zlatni sjaj (manji za prazne ćelije), manja neprovidnost sjaja
             
             if value != 0 {
                 if value < 0 {
                     Text(PowerUpType(rawValue: value)?.symbol ?? "")
                         .font(.title2)
                         .bold()
+                        .foregroundColor(.white) // Beli tekst za brojeve i power-upe
                 } else {
                     Text("\(value)")
                         .font(.title2)
                         .bold()
+                        .foregroundColor(.white)
                 }
             }
         }
@@ -257,12 +362,29 @@ struct CellView: View {
     }
     
     private var cellColor: Color {
-        if value == 0 {
-            return Color.white.opacity(0.1)
-        } else if value < 0 {
-            return Color.purple.opacity(0.3)
-        } else {
-            return Color.blue.opacity(0.3)
+        switch value {
+        case 0:
+            return Color.gray // Prazne ćelije su tamnije sive
+        case 1:
+            return .green
+        case 2:
+            return .blue
+        case 3:
+            return .red
+        case 4:
+            return .orange
+        case 5:
+            return .purple
+        case 6:
+            return .cyan
+        case 7:
+            return .pink
+        case 8:
+            return .teal
+        case 9:
+            return .indigo
+        default: // Power-ups
+            return .gray // Power-upi će imati sivu pozadinu sa zlatnom ivicom
         }
     }
 }

@@ -7,7 +7,17 @@ struct ComboEffectView: View {
         Text("\(multiplier)x COMBO!")
             .font(.system(size: 40, weight: .bold))
             .foregroundColor(.white)
-            .shadow(color: .black, radius: 2)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.black.opacity(0.6))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2)
+                    )
+                    .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
+            )
             .scaleEffect(1.2)
             .transition(.scale.combined(with: .opacity))
     }
@@ -20,7 +30,7 @@ struct LevelUpEffectView: View {
         VStack {
             Text("LEVEL \(level)!")
                 .font(.system(size: 40, weight: .bold))
-                .foregroundColor(.white)
+                .foregroundColor(.yellow)
                 .shadow(color: .black, radius: 2)
             
             Text("New target: \(level * 2)")
@@ -28,6 +38,16 @@ struct LevelUpEffectView: View {
                 .foregroundColor(.white)
                 .shadow(color: .black, radius: 2)
         }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color.black.opacity(0.6))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2)
+                )
+                .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
+        )
         .scaleEffect(1.2)
         .transition(.scale.combined(with: .opacity))
     }
@@ -40,7 +60,17 @@ struct ScoreEffectView: View {
         Text("+\(score)")
             .font(.system(size: 30, weight: .bold))
             .foregroundColor(.green)
-            .shadow(color: .black, radius: 2)
+            .padding(.horizontal, 15)
+            .padding(.vertical, 8)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.black.opacity(0.6))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 1)
+                    )
+                    .shadow(color: .yellow.opacity(0.4), radius: 6, x: 0, y: 0)
+            )
             .transition(.move(edge: .bottom).combined(with: .opacity))
     }
 }
@@ -70,9 +100,13 @@ struct AchievementEffectView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color.blue.opacity(0.9))
+                .fill(Color.black.opacity(0.7))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                )
+                .shadow(color: .yellow.opacity(0.7), radius: 10, x: 0, y: 0)
         )
-        .shadow(radius: 10)
         .transition(.scale.combined(with: .opacity))
     }
 } 

@@ -9,9 +9,14 @@ struct AchievementsView: View {
         NavigationView {
             List {
                 ForEach(Achievement.Category.allCases, id: \.self) { category in
-                    Section(header: Text(category.rawValue)) {
+                    Section(header: Text(category.rawValue)
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .padding(.vertical, 5)
+                    ) {
                         ForEach(achievementManager.getAchievementsByCategory(category)) { achievement in
                             AchievementRow(achievement: achievement)
+                                .listRowBackground(Color.black.opacity(0.3))
                         }
                     }
                 }
@@ -23,8 +28,10 @@ struct AchievementsView: View {
                     Button("Close") {
                         dismiss()
                     }
+                    .foregroundColor(.white)
                 }
             }
+            .background(Color.black.ignoresSafeArea())
         }
     }
 }
@@ -42,9 +49,10 @@ struct AchievementRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(achievement.title)
                     .font(.headline)
+                    .foregroundColor(.white)
                 Text(achievement.description)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.gray)
             }
             
             Spacer()
@@ -57,7 +65,7 @@ struct AchievementRow: View {
                     if let date = achievement.dateUnlocked {
                         Text(formatDate(date))
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.gray)
                     }
                 }
             } else {
@@ -65,7 +73,17 @@ struct AchievementRow: View {
                     .foregroundColor(.gray)
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.black.opacity(0.6))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow.opacity(0.8), Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: achievement.isUnlocked ? 3 : 1)
+                )
+                .shadow(color: .yellow.opacity(achievement.isUnlocked ? 0.6 : 0.3), radius: achievement.isUnlocked ? 10 : 5, x: 0, y: 0)
+        )
     }
     
     private func formatDate(_ date: Date) -> String {

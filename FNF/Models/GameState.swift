@@ -71,7 +71,7 @@ class GameState: ObservableObject {
         isGameOver = false
         
         let settings = ScoreManager.shared.getModeSettings(selectedMode)
-        targetNumber = settings.targetNumber
+        targetNumber = Int.random(in: 9...20)
         remainingTime = settings.timeLimit
         
         nextNumber = generateNextNumber()
@@ -310,7 +310,7 @@ class GameState: ObservableObject {
             if score >= level * 500 {
                 level += 1
                 if selectedMode != .zen {
-                    targetNumber = min(targetNumber + 2, 20)
+                    targetNumber = Int.random(in: 9...20)
                 }
                 EffectManager.shared.showLevelUp(level)
                 print("Level up! New level: \(level), new target: \(targetNumber)") // Debug print

@@ -7,10 +7,22 @@ struct StatRow: View {
     var body: some View {
         HStack {
             Text(title)
+                .foregroundColor(.white)
             Spacer()
             Text(value)
-                .foregroundColor(.secondary)
+                .foregroundColor(.yellow)
         }
+        .padding(.vertical, 4)
+        .padding(.horizontal, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.black.opacity(0.6))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow.opacity(0.8), Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 1)
+                )
+                .shadow(color: .yellow.opacity(0.3), radius: 5, x: 0, y: 0)
+        )
     }
 }
 

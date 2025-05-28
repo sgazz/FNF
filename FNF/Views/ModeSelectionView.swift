@@ -16,6 +16,7 @@ struct ModeSelectionView: View {
                             VStack(alignment: .leading) {
                                 Text(modeTitle(for: mode))
                                     .font(.headline)
+                                    .foregroundColor(.white)
                                 Text(modeDescription(for: mode))
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
@@ -25,12 +26,23 @@ struct ModeSelectionView: View {
                             
                             if mode == selectedMode {
                                 Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.yellow)
                                     .font(.title2)
                             }
                         }
                         .padding(.vertical, 8)
+                        .padding(.horizontal, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.black.opacity(0.6))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow.opacity(0.8), Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: mode == selectedMode ? 3 : 1)
+                                )
+                                .shadow(color: .yellow.opacity(mode == selectedMode ? 0.6 : 0.3), radius: mode == selectedMode ? 10 : 5, x: 0, y: 0)
+                        )
                     }
+                    .listRowBackground(Color.black.opacity(0.3))
                 }
             }
             .navigationTitle("Select Mode")
@@ -40,8 +52,10 @@ struct ModeSelectionView: View {
                     Button("Close") {
                         dismiss()
                     }
+                    .foregroundColor(.white)
                 }
             }
+            .background(Color.black.ignoresSafeArea())
         }
     }
     

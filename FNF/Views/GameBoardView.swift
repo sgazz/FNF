@@ -13,12 +13,13 @@ struct GameBoardView: View {
             showPowerUpEffect: $showPowerUpEffect,
             powerUpType: $powerUpType
         )
-        .background(Color.black.opacity(0.3))
-        .cornerRadius(10)
+        .background(Color.black.opacity(0.5))
+        .cornerRadius(15)
         .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.white.opacity(0.5), lineWidth: 2)
+            RoundedRectangle(cornerRadius: 15)
+                .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow.opacity(0.8), Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
         )
+        .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: gameState.board)
         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: gameState.fallingPosition)
         .onChange(of: gameState.lastPowerUp) { _, newPowerUp in
@@ -122,8 +123,8 @@ struct PowerUpEffectView: View {
             .padding()
             .background(
                 Circle()
-                    .fill(Color.purple.opacity(0.7))
-                    .shadow(color: .purple.opacity(0.5), radius: 10)
+                    .fill(Color.black.opacity(0.7))
+                    .shadow(color: .yellow.opacity(0.8), radius: 15)
             )
             .scaleEffect(1.2)
     }
