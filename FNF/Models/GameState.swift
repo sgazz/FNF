@@ -10,14 +10,14 @@ struct Position: Equatable {
 enum PowerUpType: Int, CaseIterable {
     case multiplier = -1  // ×2
     case randomizer = -2  // 🎲
-    case clearRow = -3    // →
+    case clearRow = -3    // ↔
     case clearColumn = -4 // ↓
     
     var symbol: String {
         switch self {
         case .multiplier: return "×2"
         case .randomizer: return "🎲"
-        case .clearRow: return "→"
+        case .clearRow: return "↔"
         case .clearColumn: return "↓"
         }
     }
@@ -40,7 +40,6 @@ class GameState: ObservableObject {
     @Published var selectedMode: ScoreManager.GameMode = .classic
     @Published var remainingTime: Int?
     @Published var maxCombo: Int = 0
-    @Published var lastPowerUp: PowerUpType?
     @Published var isFastFalling: Bool = false
     @Published var perfectGames: Int = 0
     @Published var lastComboTime: Date?
@@ -362,7 +361,6 @@ class GameState: ObservableObject {
     
     func handlePowerUp(_ powerUp: PowerUpType, at position: Position) {
         print("Activating power-up: \(powerUp.symbol) at position: \(position)") // Debug print
-        lastPowerUp = powerUp
         SoundManager.shared.playSound("powerup")
         
         // Update number of used power-ups
