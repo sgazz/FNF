@@ -1,0 +1,37 @@
+// MARK: - Common
+"Close" = "Close";
+"Points" = "Points";
+"Completed" = "Completed";
+
+// MARK: - Challenges
+"Challenges" = "Challenges";
+"Daily Challenges" = "Daily Challenges";
+"Active Challenges" = "Active Challenges";
+"Completed Challenges" = "Completed Challenges";
+"Daily Reward" = "Daily Reward";
+"Claim" = "Claim";
+"Daily Score" = "Daily Score";
+"Daily Combo" = "Daily Combo";
+"Daily Level" = "Daily Level";
+
+// MARK: - Challenge Descriptions
+"Achieve %d points" = "Achieve %d points";
+"Achieve %dx combo" = "Achieve %dx combo";
+"Reach level %d" = "Reach level %d";
+"Use %d power-ups" = "Use %d power-ups";
+"Maintain %d streak" = "Maintain %d streak";
+"Play for %d minutes" = "Play for %d minutes";
+"Score %d points" = "Score %d points";
+
+// MARK: - Challenge Types
+"Score Challenge" = "Score Challenge";
+"Combo Challenge" = "Combo Challenge";
+"Level Challenge" = "Level Challenge";
+"Power-ups Challenge" = "Power-ups Challenge";
+"Streak Challenge" = "Streak Challenge";
+"Time Challenge" = "Time Challenge";
+
+// MARK: - Challenge Titles
+"Beginner" = "Beginner";
+"Combo Master" = "Combo Master";
+"Power-up Collector" = "Power-up Collector"; 

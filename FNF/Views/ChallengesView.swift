@@ -16,7 +16,7 @@ struct ChallengesView: View {
                     }
                 }
                 
-                Section(header: Text("Daily Challenges")
+                Section(header: Text(Bundle.main.localizedString(forKey: "Daily Challenges", value: nil, table: nil))
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                                 .padding(.vertical, 5)
@@ -27,7 +27,7 @@ struct ChallengesView: View {
                     }
                 }
                 
-                Section(header: Text("Active Challenges")
+                Section(header: Text(Bundle.main.localizedString(forKey: "Active Challenges", value: nil, table: nil))
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                                 .padding(.vertical, 5)
@@ -38,7 +38,7 @@ struct ChallengesView: View {
                     }
                 }
                 
-                Section(header: Text("Completed Challenges")
+                Section(header: Text(Bundle.main.localizedString(forKey: "Completed Challenges", value: nil, table: nil))
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                                 .padding(.vertical, 5)
@@ -49,11 +49,11 @@ struct ChallengesView: View {
                     }
                 }
             }
-            .navigationTitle("Challenges")
+            .navigationTitle(Bundle.main.localizedString(forKey: "Challenges", value: nil, table: nil))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Close") {
+                    Button(Bundle.main.localizedString(forKey: "Close", value: nil, table: nil)) {
                         dismiss()
                     }
                     .foregroundColor(.white)
@@ -74,19 +74,19 @@ struct DailyRewardView: View {
                 Image(systemName: "gift.fill")
                     .font(.title)
                     .foregroundColor(.yellow)
-                Text("Daily Reward")
+                Text(Bundle.main.localizedString(forKey: "Daily Reward", value: nil, table: nil))
                     .font(.headline)
                     .foregroundColor(.white)
                 Spacer()
             }
             
-            Text("+\(reward) points")
+            Text("+\(reward) \(Bundle.main.localizedString(forKey: "Points", value: nil, table: nil))")
                 .font(.title2)
                 .bold()
                 .foregroundColor(.green)
             
             Button(action: onClaim) {
-                Text("Claim")
+                Text(Bundle.main.localizedString(forKey: "Claim", value: nil, table: nil))
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding(.horizontal, 20)
@@ -145,13 +145,13 @@ struct ChallengeRow: View {
                     .font(.caption)
                     .foregroundColor(.gray)
                 Spacer()
-                Text("+\(challenge.reward) points")
+                Text("+\(challenge.reward) \(Bundle.main.localizedString(forKey: "Points", value: nil, table: nil))")
                     .font(.caption)
                     .foregroundColor(.green)
             }
             
             if let date = challenge.dateCompleted {
-                Text("Completed: \(formatDate(date))")
+                Text("\(Bundle.main.localizedString(forKey: "Completed", value: nil, table: nil)): \(formatDate(date))")
                     .font(.caption2)
                     .foregroundColor(.gray)
             }
