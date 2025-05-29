@@ -171,15 +171,6 @@ struct ContentView: View {
                     // Top menu - remove system icons if they are replaced by main menu buttons
                     HStack {
                         Spacer()
-                        Button(action: {
-                            impactGenerator.impactOccurred()
-                            gameState.togglePause()
-                        }) {
-                            Image(systemName: gameState.isPaused ? "play.circle.fill" : "pause.circle.fill")
-                                .font(.system(size: 30))
-                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
-                                .shadow(color: .yellow.opacity(0.6), radius: 5, x: 0, y: 0)
-                        }
                     }
                     .padding()
                     
@@ -250,7 +241,7 @@ struct ContentView: View {
                         .frame(maxHeight: .infinity)
                         .frame(height: UIScreen.main.bounds.height * 0.55)
                         .padding(.horizontal)
-                        .padding(.vertical, 5)
+                        .padding(.vertical, 1)
                     
                     // Controls - apply gold border and glow to buttons
                     HStack(spacing: 30) {
@@ -270,6 +261,16 @@ struct ContentView: View {
                         }
                         
                         VStack(spacing: 15) {
+                            Button(action: {
+                                impactGenerator.impactOccurred()
+                                gameState.togglePause()
+                            }) {
+                                Image(systemName: gameState.isPaused ? "play.circle.fill" : "pause.circle.fill")
+                                    .font(.system(size: 25, weight: .bold))
+                                    .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                                    .shadow(color: .yellow.opacity(0.6), radius: 5, x: 0, y: 0)
+                            }
+                            
                             Button(action: {
                                 impactGenerator.impactOccurred()
                                 gameState.rotate()
@@ -326,7 +327,7 @@ struct ContentView: View {
                         SoundManager.shared.playSound("gameover")
                         gameState.resetGame()
                         showingGameOver = false
-                    })
+                    }, isShowingMainMenu: $isShowingMainMenu)
                 }
                 
                 // Pause overlay
@@ -393,21 +394,26 @@ struct ContentView: View {
                 // Vizuelni efekti
                 if effectManager.showingCombo {
                     ComboEffectView(multiplier: effectManager.comboMultiplier)
-                        .transition(.scale.combined(with: .opacity))
+                        .offset(y: -UIScreen.main.bounds.height * 0.3)
+                        .opacity(effectManager.opacity)
                 }
                 
                 if effectManager.showingLevelUp {
                     LevelUpEffectView(level: effectManager.level)
-                        .transition(.scale.combined(with: .opacity))
+                        .offset(y: -UIScreen.main.bounds.height * 0.3)
+                        .opacity(effectManager.opacity)
                 }
                 
                 if effectManager.showingScore {
                     ScoreEffectView(score: effectManager.score)
-                        .transition(.scale.combined(with: .opacity))
+                        .offset(y: -UIScreen.main.bounds.height * 0.3)
+                        .opacity(effectManager.opacity)
                 }
                 
-                if effectManager.showingAchievement, let achievement = effectManager.achievement {
-                    AchievementEffectView(achievement: achievement)
+                if effectManager.showingAchievement {
+                    AchievementEffectView(achievement: effectManager.achievement!)
+                        .offset(y: -UIScreen.main.bounds.height * 0.3)
+                        .opacity(effectManager.opacity)
                 }
             }
         }
@@ -510,33 +516,73 @@ struct CellView: View {
 struct GameOverView: View {
     let score: Int
     let onPlayAgain: () -> Void
+    @Binding var isShowingMainMenu: Bool
     
     var body: some View {
         ZStack {
             Color.black.opacity(0.7)
                 .ignoresSafeArea()
             
-            VStack(spacing: 20) {
+            VStack(spacing: 30) {
                 Text("Game Over!")
-                    .font(.largeTitle)
-                    .bold()
+                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                    .shadow(color: .yellow.opacity(0.5), radius: 10, x: 0, y: 5)
                 
                 Text("Score: \(score)")
-                    .font(.title)
+                    .font(.system(size: 30, weight: .bold))
+                    .foregroundColor(.white)
+                    .shadow(color: .black, radius: 2)
                 
                 Button(action: onPlayAgain) {
                     Text("Play Again")
                         .font(.title2)
                         .bold()
-                        .padding()
-                        .background(Color.blue)
+                        .frame(width: 250)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                        )
                         .foregroundColor(.white)
-                        .cornerRadius(10)
+                }
+                
+                Button(action: {
+                    onPlayAgain()
+                    isShowingMainMenu = true
+                }) {
+                    Text("Main Menu")
+                        .font(.title2)
+                        .bold()
+                        .frame(width: 250)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                        )
+                        .foregroundColor(.white)
                 }
             }
-            .padding()
-            .background(Color.white.opacity(0.2))
-            .cornerRadius(20)
+            .padding(40)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.black.opacity(0.5))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                    )
+                    .shadow(color: .yellow.opacity(0.6), radius: 20, x: 0, y: 0)
+            )
         }
     }
 }
