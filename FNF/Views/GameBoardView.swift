@@ -45,7 +45,7 @@ private struct GameBoardContent: View {
     @Binding var powerUpType: PowerUpType?
     
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 1) {
             ForEach(0..<GameState.rows, id: \.self) { row in
                 GameBoardRow(
                     row: row,
@@ -96,7 +96,7 @@ private struct GameBoardRow: View {
     @ObservedObject var gameState: GameState
     
     var body: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: 1) {
             ForEach(0..<GameState.columns, id: \.self) { column in
                 CellView(value: getCellValue(row: row, column: column))
                     .transition(.scale.combined(with: .opacity))

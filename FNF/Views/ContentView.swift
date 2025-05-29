@@ -9,9 +9,7 @@ struct ContentView: View {
     @State private var showingModeSelection = false
     @State private var showingAchievements = false
     @State private var showingStatistics = false
-    @State private var showingPlayerStats = false
     @State private var showingChallenges = false
-    @State private var showingStats = false
     @State private var showingRules = false
     @State private var isMuted = false
     @State private var isShowingMainMenu = true
@@ -33,12 +31,11 @@ struct ContentView: View {
             
             if isShowingMainMenu {
                 VStack(spacing: 40) {
-                    Spacer()
-                    
                     Text("Fall Number...Fall!")
                         .font(.system(size: 40, weight: .bold, design: .rounded))
                         .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
                         .shadow(color: .yellow.opacity(0.5), radius: 10, x: 0, y: 5)
+                        .padding(.top, 60)
                     
                     Button("Rules") {
                         showingRules = true
@@ -48,7 +45,7 @@ struct ContentView: View {
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.black.opacity(0.6))
+                            .fill(Color.white.opacity(0.15))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
@@ -65,7 +62,7 @@ struct ContentView: View {
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.black.opacity(0.6))
+                            .fill(Color.white.opacity(0.15))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
@@ -75,14 +72,14 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     
                     Button("Statistics") {
-                        showingStats = true
+                        showingStatistics = true
                     }
                     .font(.title2)
                     .frame(width: 250)
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.black.opacity(0.6))
+                            .fill(Color.white.opacity(0.15))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
@@ -99,7 +96,7 @@ struct ContentView: View {
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.black.opacity(0.6))
+                            .fill(Color.white.opacity(0.15))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
@@ -116,7 +113,7 @@ struct ContentView: View {
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.black.opacity(0.6))
+                            .fill(Color.white.opacity(0.15))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
@@ -134,7 +131,7 @@ struct ContentView: View {
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.black.opacity(0.6))
+                            .fill(Color.white.opacity(0.15))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
@@ -157,7 +154,7 @@ struct ContentView: View {
                         .padding(.vertical, 15)
                         .background(
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.black.opacity(0.6))
+                                .fill(Color.white.opacity(0.15))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
@@ -174,6 +171,15 @@ struct ContentView: View {
                     // Top menu - remove system icons if they are replaced by main menu buttons
                     HStack {
                         Spacer()
+                        Button(action: {
+                            impactGenerator.impactOccurred()
+                            gameState.togglePause()
+                        }) {
+                            Image(systemName: gameState.isPaused ? "play.circle.fill" : "pause.circle.fill")
+                                .font(.system(size: 30))
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                                .shadow(color: .yellow.opacity(0.6), radius: 5, x: 0, y: 0)
+                        }
                     }
                     .padding()
                     
@@ -183,17 +189,40 @@ struct ContentView: View {
                             Text("Score: \(gameState.score)")
                                 .font(.title2)
                                 .bold()
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
                             Text("Level: \(gameState.level)")
-                                .font(.title3)
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                        }
+                        
+                        Spacer()
+                        
+                        VStack {
+                            Text("Next:")
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            if gameState.nextNumber < 0 {
+                                Text(PowerUpType(rawValue: gameState.nextNumber)?.symbol ?? "")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            } else {
+                                Text("\(gameState.nextNumber)")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            }
                         }
                         
                         Spacer()
                         
                         VStack {
                             Text("Target: \(gameState.targetNumber)")
-                                .font(.title3)
-                            Text("Combo: x\(gameState.comboMultiplier)")
-                                .font(.title3)
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            Text("Combo: \(gameState.currentCombos)")
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
                         }
                     }
                     .padding()
@@ -218,8 +247,10 @@ struct ContentView: View {
                     
                     // Game board
                     GameBoardView(gameState: gameState)
-                        .frame(height: 400)
-                        .padding()
+                        .frame(maxHeight: .infinity)
+                        .frame(height: UIScreen.main.bounds.height * 0.55)
+                        .padding(.horizontal)
+                        .padding(.vertical, 5)
                     
                     // Controls - apply gold border and glow to buttons
                     HStack(spacing: 30) {
@@ -228,8 +259,8 @@ struct ContentView: View {
                             gameState.moveLeft()
                         }) {
                             Image(systemName: "arrow.left")
-                                .font(.title)
-                                .padding()
+                                .font(.system(size: 40, weight: .bold))
+                                .padding(25)
                                 .background(Circle().fill(Color.black.opacity(0.4)))
                                 .overlay(
                                     Circle()
@@ -238,19 +269,36 @@ struct ContentView: View {
                                 .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
                         }
                         
-                        Button(action: {
-                            impactGenerator.impactOccurred()
-                            gameState.rotate()
-                        }) {
-                            Image(systemName: "arrow.2.squarepath")
-                                .font(.title)
-                                .padding()
-                                .background(Circle().fill(Color.black.opacity(0.4)))
-                                .overlay(
-                                    Circle()
-                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
-                                )
-                                .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
+                        VStack(spacing: 15) {
+                            Button(action: {
+                                impactGenerator.impactOccurred()
+                                gameState.rotate()
+                            }) {
+                                Image(systemName: "arrow.2.squarepath")
+                                    .font(.system(size: 30, weight: .bold))
+                                    .padding(20)
+                                    .background(Circle().fill(Color.black.opacity(0.4)))
+                                    .overlay(
+                                        Circle()
+                                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                    )
+                                    .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
+                            }
+                            
+                            Button(action: {
+                                impactGenerator.impactOccurred()
+                                gameState.toggleFastFall()
+                            }) {
+                                Image(systemName: "arrow.down")
+                                    .font(.system(size: 30, weight: .bold))
+                                    .padding(20)
+                                    .background(Circle().fill(Color.black.opacity(0.4)))
+                                    .overlay(
+                                        Circle()
+                                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                    )
+                                    .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
+                            }
                         }
                         
                         Button(action: {
@@ -258,8 +306,8 @@ struct ContentView: View {
                             gameState.moveRight()
                         }) {
                             Image(systemName: "arrow.right")
-                                .font(.title)
-                                .padding()
+                                .font(.system(size: 40, weight: .bold))
+                                .padding(25)
                                 .background(Circle().fill(Color.black.opacity(0.4)))
                                 .overlay(
                                     Circle()
@@ -279,6 +327,67 @@ struct ContentView: View {
                         gameState.resetGame()
                         showingGameOver = false
                     })
+                }
+                
+                // Pause overlay
+                if gameState.isPaused {
+                    ZStack {
+                        Color.black.opacity(0.7)
+                            .ignoresSafeArea()
+                        
+                        VStack(spacing: 20) {
+                            Text("PAUSED")
+                                .font(.system(size: 40, weight: .bold, design: .rounded))
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                                .shadow(color: .yellow.opacity(0.5), radius: 10, x: 0, y: 5)
+                            
+                            Button(action: {
+                                impactGenerator.impactOccurred()
+                                gameState.togglePause()
+                            }) {
+                                Text("Resume")
+                                    .font(.title2)
+                                    .bold()
+                                    .padding()
+                                    .frame(width: 200)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color.white.opacity(0.15))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                            )
+                                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                                    )
+                                    .foregroundColor(.white)
+                            }
+                            
+                            Button(action: {
+                                impactGenerator.impactOccurred()
+                                gameState.isPaused = false
+                                isShowingMainMenu = true
+                            }) {
+                                Text("Main Menu")
+                                    .font(.title2)
+                                    .bold()
+                                    .padding()
+                                    .frame(width: 200)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color.white.opacity(0.15))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                            )
+                                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                                    )
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        .padding()
+                        .background(Color.black.opacity(0.2))
+                        .cornerRadius(20)
+                    }
                 }
                 
                 // Vizuelni efekti
@@ -311,14 +420,8 @@ struct ContentView: View {
         .sheet(isPresented: $showingStatistics) {
             StatisticsView()
         }
-        .sheet(isPresented: $showingPlayerStats) {
-            PlayerStatsView()
-        }
         .sheet(isPresented: $showingChallenges) {
             ChallengesView()
-        }
-        .sheet(isPresented: $showingStats) {
-            PlayerStatsView()
         }
         .sheet(isPresented: $showingRules) {
             GameRulesView()

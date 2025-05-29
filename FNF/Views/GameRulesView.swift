@@ -6,6 +6,42 @@ struct GameRulesView: View {
     var body: some View {
         NavigationView {
             List {
+                // Introduction
+                Section(header: Text("Introduction")
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .padding(.vertical, 5)
+                    ) {
+                    RuleRow(
+                        title: "Welcome to Fall Number...Fall!",
+                        description: "A fast-paced puzzle game where you combine falling numbers to reach target sums. Think fast, plan ahead, and master the art of number placement!"
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                }
+                
+                // Beginner's Guide
+                Section(header: Text("Beginner's Guide")
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .padding(.vertical, 5)
+                    ) {
+                    RuleRow(
+                        title: "Getting Started",
+                        description: "Start with Zen mode to learn the basics. Focus on making simple combinations first. Remember: you can always rotate numbers to plan your next move."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "First Steps",
+                        description: "1. Watch the next number\n2. Plan where to place it\n3. Use rotation to get better numbers\n4. Try to clear rows or columns\n5. Don't rush - speed comes with practice"
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "Visual Examples",
+                        description: "• Good: 3 + 4 + 3 = 10 (target)\n• Better: 3 + 4 + 3 + 5 = 15 (combo!)\n• Best: Clear multiple lines at once!"
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                }
+                
                 // Basic Rules
                 Section(header: Text("Basic Rules")
                                 .font(.headline)
@@ -19,7 +55,7 @@ struct GameRulesView: View {
                     .listRowBackground(Color.black.opacity(0.3))
                     RuleRow(
                         title: "Game Objective",
-                        description: "Achieve the target number in a row or column to score points. The target number increases with level (starts at 10 and can reach up to 20). Every 500 points advances you to the next level."
+                        description: "Achieve the target number in a row or column to score points. The target number increases with level (starts at 10 and can reach up to 20), except in Zen mode where it remains constant. Every 500 points advances you to the next level."
                     )
                     .listRowBackground(Color.black.opacity(0.3))
                     RuleRow(
@@ -42,7 +78,7 @@ struct GameRulesView: View {
                     .listRowBackground(Color.black.opacity(0.3))
                     RuleRow(
                         title: "Rotation",
-                        description: "Use the rotation button to swap the current and next number. This is a key mechanic for planning moves."
+                        description: "Use the rotation button to swap the current falling number with the next number in queue. This is a key mechanic for planning moves and getting better combinations."
                     )
                     .listRowBackground(Color.black.opacity(0.3))
                     RuleRow(
@@ -58,6 +94,11 @@ struct GameRulesView: View {
                                 .foregroundColor(.yellow)
                                 .padding(.vertical, 5)
                     ) {
+                    RuleRow(
+                        title: "Power-up Basics",
+                        description: "Power-ups are available in all game modes. In Zen mode, they can be used without time or score restrictions, but still depend on the 10% drop chance. Each power-up has a specific effect and strategic use."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
                     RuleRow(
                         title: "×2 (Multiplier)",
                         description: "Doubles the value of the combo multiplier. Use it when you have a good combo for maximum points. The effect lasts until the next clear."
@@ -88,7 +129,7 @@ struct GameRulesView: View {
                     ) {
                     RuleRow(
                         title: "Combo Multiplier",
-                        description: "Each successful move increases the combo multiplier (maximum 5x). The combo resets if you don't clear any lines within 5 seconds."
+                        description: "Each successful move increases the combo multiplier (maximum 5x). The combo resets if you don't clear any lines within 5 seconds. This timer applies to all modes, including Time Attack - the faster pace requires even more careful planning."
                     )
                     .listRowBackground(Color.black.opacity(0.3))
                     RuleRow(
@@ -162,7 +203,7 @@ struct GameRulesView: View {
                     ) {
                     RuleRow(
                         title: "End Game",
-                        description: "The game ends when a falling number cannot be stopped in any row. In Time Attack mode, the game also ends when time runs out."
+                        description: "The game ends when a falling number cannot be stopped in any row. In Time Attack mode, the game also ends when time runs out. This does not apply to Zen mode, which has no game over - you can play indefinitely."
                     )
                     .listRowBackground(Color.black.opacity(0.3))
                     RuleRow(

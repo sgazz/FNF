@@ -3,6 +3,7 @@ import SwiftUI
 struct StatisticsView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var highScores = UserDefaultsManager.shared.getHighScores()
+    @StateObject private var playerStats = PlayerStatsManager.shared
     
     var body: some View {
         NavigationView {
@@ -21,29 +22,92 @@ struct StatisticsView: View {
                     }
                 }
                 
-                Section(header: Text("Statistics")
+                Section(header: Text("Game Statistics")
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                                 .padding(.vertical, 5)
                     ) {
                     StatRow(
                         title: "Total Games Played",
-                        value: "\(UserDefaultsManager.shared.getGamesPlayed())"
+                        value: "\(playerStats.stats.gamesPlayed)"
                     )
                     .listRowBackground(Color.black.opacity(0.3))
                     StatRow(
                         title: "Total Play Time",
-                        value: TimeFormatter.format(TimeInterval(UserDefaultsManager.shared.getTotalPlayTime() * 60))
+                        value: TimeFormatter.format(playerStats.stats.totalPlayTime)
                     )
                     .listRowBackground(Color.black.opacity(0.3))
                     StatRow(
                         title: "Total Score",
-                        value: "\(UserDefaultsManager.shared.getTotalScore())"
+                        value: "\(playerStats.stats.totalScore)"
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    StatRow(
+                        title: "High Score",
+                        value: "\(playerStats.stats.highScore)"
                     )
                     .listRowBackground(Color.black.opacity(0.3))
                 }
                 
-                if let lastPlayed = UserDefaultsManager.shared.getLastPlayedDate() {
+                Section(header: Text("Performance")
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .padding(.vertical, 5)
+                    ) {
+                    StatRow(
+                        title: "Highest Combo",
+                        value: "\(playerStats.stats.maxCombo)x"
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    StatRow(
+                        title: "Highest Level",
+                        value: "\(playerStats.stats.maxLevel)"
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    StatRow(
+                        title: "Perfect Games",
+                        value: "\(playerStats.stats.perfectGames)"
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    StatRow(
+                        title: "Total Mistakes",
+                        value: "\(playerStats.stats.mistakes)"
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                }
+                
+                Section(header: Text("Averages")
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .padding(.vertical, 5)
+                    ) {
+                    StatRow(
+                        title: "Average Score",
+                        value: "\(playerStats.getAverageScore())"
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    StatRow(
+                        title: "Average Play Time",
+                        value: TimeFormatter.format(playerStats.getAveragePlayTime())
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                }
+                
+                if let mostUsedPowerUp = playerStats.getMostUsedPowerUp() {
+                    Section(header: Text("Power-ups")
+                                    .font(.headline)
+                                    .foregroundColor(.yellow)
+                                    .padding(.vertical, 5)
+                        ) {
+                        StatRow(
+                            title: "Most Used Power-up",
+                            value: "\(mostUsedPowerUp.symbol) (\(mostUsedPowerUp.count) times)"
+                        )
+                        .listRowBackground(Color.black.opacity(0.3))
+                    }
+                }
+                
+                if let lastPlayed = playerStats.stats.lastPlayed {
                     Section(header: Text("Last Game")
                                     .font(.headline)
                                     .foregroundColor(.yellow)

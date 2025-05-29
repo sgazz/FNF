@@ -44,6 +44,7 @@ class GameState: ObservableObject {
     @Published var isFastFalling: Bool = false
     @Published var perfectGames: Int = 0
     @Published var lastComboTime: Date?
+    @Published var isPaused: Bool = false
     
     private var timer: Timer?
     private var gameTimer: Timer?
@@ -196,6 +197,13 @@ class GameState: ObservableObject {
                 fallingPosition = Position(row: 0, column: 2)
                 fallingNumber = nextNumber
                 nextNumber = generateNextNumber()
+                
+                // Reset fast falling for the new number
+                isFastFalling = false
+                timer?.invalidate()
+                timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+                    self?.updateFallingNumber()
+                }
                 
                 // Check game over
                 if checkCollision() {
@@ -383,17 +391,20 @@ class GameState: ObservableObject {
     }
     
     func toggleFastFall() {
-        isFastFalling.toggle()
-        if isFastFalling {
+        isFastFalling = true
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            self?.updateFallingNumber()
+        }
+    }
+    
+    func togglePause() {
+        isPaused.toggle()
+        if isPaused {
             timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-                self?.updateFallingNumber()
-            }
+            gameTimer?.invalidate()
         } else {
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
-                self?.updateFallingNumber()
-            }
+            startGameTimer()
         }
     }
     
@@ -421,11 +432,27 @@ class GameState: ObservableObject {
         let playTime = gameStartTime.map { Date().timeIntervalSince($0) } ?? 0
         let totalPowerUpsUsed = powerUpsUsed.values.reduce(0, +)
         
+        // Update player stats
+        PlayerStatsManager.shared.updateStats(
+            gameScore: score,
+            playTime: playTime,
+            powerUps: powerUpsUsed,
+            isPerfect: mistakes == 0,
+            mistakes: mistakes
+        )
+        
+        // Update game stats
+        PlayerStatsManager.shared.updateGameStats(
+            maxCombo: maxCombo,
+            maxLevel: level
+        )
+        
+        // Update achievements
         AchievementManager.shared.updateProgress(
-            totalScore: score,
-            highScore: UserDefaultsManager.shared.getHighScore(),
-            gamesPlayed: 1,
-            playTime: Int(playTime),
+            totalScore: PlayerStatsManager.shared.stats.totalScore,
+            highScore: PlayerStatsManager.shared.stats.highScore,
+            gamesPlayed: PlayerStatsManager.shared.stats.gamesPlayed,
+            playTime: Int(PlayerStatsManager.shared.stats.totalPlayTime),
             maxCombo: maxCombo,
             maxLevel: level,
             powerUpsUsed: totalPowerUpsUsed,
@@ -440,18 +467,6 @@ class GameState: ObservableObject {
             powerUpsUsed: totalPowerUpsUsed,
             streak: currentStreak,
             timePlayed: playTime
-        )
-        
-        // Update achievements
-        AchievementManager.shared.updateProgress(
-            totalScore: PlayerStatsManager.shared.stats.totalScore,
-            highScore: PlayerStatsManager.shared.stats.highScore,
-            gamesPlayed: PlayerStatsManager.shared.stats.gamesPlayed,
-            playTime: Int(PlayerStatsManager.shared.stats.totalPlayTime),
-            maxCombo: maxCombo,
-            maxLevel: level,
-            powerUpsUsed: totalPowerUpsUsed,
-            perfectGames: mistakes == 0 ? 1 : 0
         )
         
         // Game over sound
