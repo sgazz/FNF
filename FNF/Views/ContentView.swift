@@ -125,6 +125,7 @@ struct ContentView: View {
                     Button("Start Game") {
                         isShowingMainMenu = false
                         gameState.resetGame()
+                        gameState.startGameTimer()
                     }
                     .font(.title2)
                     .frame(width: 250)
@@ -239,7 +240,7 @@ struct ContentView: View {
                     // Game board
                     GameBoardView(gameState: gameState)
                         .frame(maxHeight: .infinity)
-                        .frame(height: UIScreen.main.bounds.height * 0.55)
+                        .frame(height: UIScreen.main.bounds.height * 0.50)
                         .padding(.horizontal)
                         .padding(.vertical, 1)
                     
@@ -460,10 +461,10 @@ struct CellView: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 8) // Više zaobljeni uglovi
+            RoundedRectangle(cornerRadius: 4) // Manje zaobljeni uglovi
                 .fill(cellColor.opacity(value == 0 ? 0.1 : 0.6)) // Smanjena neprovidnost pozadine ćelije, malo tamnije
                 .overlay(
-                    RoundedRectangle(cornerRadius: 8) // Manji zaobljeni uglovi za ćelije
+                    RoundedRectangle(cornerRadius: 4) // Manji zaobljeni uglovi za ćelije
                         .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow.opacity(0.8), Color.orange.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: value == 0 ? 1 : 2) // Zlatna ivica (tanja za prazne ćelije), manja neprovidnost gradijenta
                 )
                 .shadow(color: .yellow.opacity(value == 0 ? 0.1 : 0.4), radius: value == 0 ? 3 : 6, x: 0, y: 0) // Zlatni sjaj (manji za prazne ćelije), manja neprovidnost sjaja

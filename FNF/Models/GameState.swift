@@ -77,12 +77,11 @@ class GameState: ObservableObject {
         nextNumber = generateNextNumber()
         fallingNumber = generateNextNumber()
         
-        startGameTimer()
         powerUpsUsed = [:]
         gameStartTime = Date()
     }
     
-    private func startGameTimer() {
+    internal func startGameTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
             self?.updateFallingNumber()
@@ -342,21 +341,27 @@ class GameState: ObservableObject {
         }
     }
     
-    func clearRow(_ row: Int) {
+    func clearRow(_ row: Int) -> Int {
         print("Clearing row \(row): \(board[row])") // Debug print
+        var clearedSum = 0
         for col in 0..<Self.columns {
+            clearedSum += board[row][col]
             board[row][col] = 0
         }
         print("Row \(row) cleared: \(board[row])") // Debug print
+        return clearedSum
     }
     
-    func clearColumn(_ col: Int) {
+    func clearColumn(_ col: Int) -> Int {
         print("Clearing column \(col)") // Debug print
+        var clearedSum = 0
         for row in 0..<Self.rows {
             print("Column \(col) value at row \(row): \(board[row][col])") // Debug print
+            clearedSum += board[row][col]
             board[row][col] = 0
         }
         print("Column \(col) cleared") // Debug print
+        return clearedSum
     }
     
     func handlePowerUp(_ powerUp: PowerUpType, at position: Position) {
@@ -381,10 +386,12 @@ class GameState: ObservableObject {
             }
         case .clearRow:
             print("Applying clear row effect") // Debug print
-            clearRow(position.row)
+            let clearedSum = clearRow(position.row)
+            score += clearedSum // Dodaj zbir obrisanih brojeva na skor
         case .clearColumn:
             print("Applying clear column effect") // Debug print
-            clearColumn(position.column)
+            let clearedSum = clearColumn(position.column)
+            score += clearedSum // Dodaj zbir obrisanih brojeva na skor
         }
     }
     

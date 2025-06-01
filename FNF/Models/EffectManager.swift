@@ -86,8 +86,8 @@ class EffectManager: ObservableObject {
             opacity = 1
         }
         
-        // Sačekaj 0.3 sekunde za prikaz efekta
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+        // Sačekaj 1.1 sekunde za prikaz efekta (promenjeno sa 0.7)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.1) { [weak self] in
             // Fade out animacija
             withAnimation(.easeOut(duration: 0.15)) {
                 self?.opacity = 0
