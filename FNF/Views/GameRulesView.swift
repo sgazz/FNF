@@ -55,7 +55,7 @@ struct GameRulesView: View {
                     .listRowBackground(Color.black.opacity(0.3))
                     RuleRow(
                         title: "Game Objective",
-                        description: "Achieve the target number in a row or column to score points. The target number increases with level (starts at 10 and can reach up to 20), except in Zen mode where it remains constant. Every 500 points advances you to the next level."
+                        description: "Achieve the target number in a row or column to score points. The target number increases with level (starts at 9 and can reach up to 20), except in Zen mode where it remains constant. Every 500 points advances you to the next level."
                     )
                     .listRowBackground(Color.black.opacity(0.3))
                     RuleRow(
@@ -163,6 +163,85 @@ struct GameRulesView: View {
                     RuleRow(
                         title: "Zen",
                         description: "Relaxing mode without time limit or game over. The target number remains constant. Perfect for practice and learning mechanics."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "Challenges",
+                        description: "Complete daily and weekly challenges to earn rewards. Each challenge has specific objectives and time limits. Perfect for testing your skills and earning bonus points."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "Survival",
+                        description: "Test your endurance in this challenging mode. The game gets progressively harder with each level. Survive as long as possible and compete for the highest score."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                }
+                
+                // Challenges & Rewards
+                Section(header: Text("Challenges & Rewards")
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .padding(.vertical, 5)
+                    ) {
+                    RuleRow(
+                        title: "Daily Challenges",
+                        description: "New challenges every day. Complete them to earn bonus points and special rewards. Challenges reset at midnight."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "Weekly Challenges",
+                        description: "More difficult challenges that last for a week. These offer bigger rewards and test your mastery of the game."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "Rewards",
+                        description: "Earn points, power-ups, and special items by completing challenges. Use these rewards to enhance your gameplay and achieve higher scores."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                }
+                
+                // Progress System
+                Section(header: Text("Progress System")
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .padding(.vertical, 5)
+                    ) {
+                    RuleRow(
+                        title: "Levels",
+                        description: "Gain experience points by playing games and completing challenges. Each level unlocks new features and increases your maximum combo multiplier."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "Achievements",
+                        description: "Complete special objectives to earn achievements. These showcase your skills and provide additional rewards."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "Leaderboards",
+                        description: "Compete with other players for the highest scores in each game mode. Daily, weekly, and all-time leaderboards available."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                }
+                
+                // Points System
+                Section(header: Text("Points System")
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .padding(.vertical, 5)
+                    ) {
+                    RuleRow(
+                        title: "Basic Points",
+                        description: "Points = number of cleared lines × 100 × combo multiplier. In Time Attack mode, points are multiplied by 1.5."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "Challenge Points",
+                        description: "Complete challenges to earn bonus points. Daily challenges offer 100-500 points, while weekly challenges can reward up to 2000 points."
+                    )
+                    .listRowBackground(Color.black.opacity(0.3))
+                    RuleRow(
+                        title: "Achievement Points",
+                        description: "Earn points by unlocking achievements. These points contribute to your overall progress and level advancement."
                     )
                     .listRowBackground(Color.black.opacity(0.3))
                 }

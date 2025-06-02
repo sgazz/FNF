@@ -229,20 +229,25 @@ struct ContentView: View {
                     )
                     .padding(.horizontal)
                     
-                    // Remaining time (only for time attack mode)
-                    if let remainingTime = gameState.remainingTime {
-                        Text(timeString(from: remainingTime))
-                            .font(.title)
-                            .bold()
-                            .foregroundColor(remainingTime <= 30 ? .red : .primary)
-                    }
-                    
                     // Game board
                     GameBoardView(gameState: gameState)
                         .frame(maxHeight: .infinity)
                         .frame(height: UIScreen.main.bounds.height * 0.50)
                         .padding(.horizontal)
                         .padding(.vertical, 1)
+                        .overlay(
+                            Group {
+                                if let remainingTime = gameState.remainingTime {
+                                    Text(timeString(from: remainingTime))
+                                        .font(.system(size: 100, weight: .bold, design: .rounded))
+                                        .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                                        .shadow(color: .black.opacity(0.5), radius: 5, x: 0, y: 0)
+                                        .opacity(0.4)
+                                        .animation(.easeInOut(duration: 0.3), value: remainingTime)
+                                        .offset(y: -UIScreen.main.bounds.height * 0.15)
+                                }
+                            }
+                        )
                     
                     // Controls - apply gold border and glow to buttons
                     HStack(spacing: 30) {

@@ -111,6 +111,8 @@ class ScoreManager {
         case classic = "classic"
         case timeAttack = "timeAttack"
         case zen = "zen"
+        case challenges = "challenges"
+        case survival = "survival"
         
         var settings: (targetNumber: Int, timeLimit: Int?) {
             switch self {
@@ -120,6 +122,10 @@ class ScoreManager {
                 return (15, 180) // 3 minutes
             case .zen:
                 return (8, nil)
+            case .challenges:
+                return (12, nil)
+            case .survival:
+                return (10, nil)
             }
         }
     }

@@ -7,19 +7,27 @@ struct ModeSelectionView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach([ScoreManager.GameMode.classic, .timeAttack, .zen], id: \.self) { mode in
+                ForEach([ScoreManager.GameMode.classic, .timeAttack, .zen, .challenges, .survival], id: \.self) { mode in
                     Button(action: {
-                        selectedMode = mode
-                        dismiss()
+                        if mode != .challenges && mode != .survival {
+                            selectedMode = mode
+                            dismiss()
+                        }
                     }) {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(modeTitle(for: mode))
                                     .font(.headline)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(mode == .challenges || mode == .survival ? .gray : .white)
                                 Text(modeDescription(for: mode))
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
+                                if mode == .challenges || mode == .survival {
+                                    Text("Under Construction")
+                                        .font(.caption)
+                                        .foregroundColor(.yellow)
+                                        .padding(.top, 2)
+                                }
                             }
                             
                             Spacer()
@@ -41,6 +49,7 @@ struct ModeSelectionView: View {
                                 )
                                 .shadow(color: .yellow.opacity(mode == selectedMode ? 0.6 : 0.3), radius: mode == selectedMode ? 10 : 5, x: 0, y: 0)
                         )
+                        .opacity(mode == .challenges || mode == .survival ? 0.7 : 1.0)
                     }
                     .listRowBackground(Color.black.opacity(0.3))
                 }
@@ -67,6 +76,10 @@ struct ModeSelectionView: View {
             return "Time Attack Mode"
         case .zen:
             return "Zen Mode"
+        case .challenges:
+            return "Challenges Mode"
+        case .survival:
+            return "Survival Mode"
         }
     }
     
@@ -78,6 +91,10 @@ struct ModeSelectionView: View {
             return "Play against time - 3 minutes for highest score"
         case .zen:
             return "Relaxing mode with lower target number"
+        case .challenges:
+            return "Complete daily and weekly challenges for rewards"
+        case .survival:
+            return "Test your endurance in progressively harder levels"
         }
     }
 }
