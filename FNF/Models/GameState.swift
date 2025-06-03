@@ -81,9 +81,24 @@ class GameState: ObservableObject {
         gameStartTime = Date()
     }
     
+    private func getFallSpeed() -> TimeInterval {
+        switch level {
+        case 1...49:
+            return 0.5
+        case 50...99:
+            return 0.4
+        case 100...149:
+            return 0.3
+        case 150...:
+            return 0.2
+        default:
+            return 0.5
+        }
+    }
+    
     internal func startGameTimer() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: getFallSpeed(), repeats: true) { [weak self] _ in
             self?.updateFallingNumber()
         }
         
@@ -101,8 +116,16 @@ class GameState: ObservableObject {
     }
     
     func generateNextNumber() -> Int {
-        // Increased power-up probability to 20% for testing
-        if Double.random(in: 0...1) < 0.2 {
+        let powerUpProbability: Double
+        if selectedMode == .zen {
+            powerUpProbability = 0.2
+        } else if level >= 100 {
+            powerUpProbability = 0.05
+        } else {
+            powerUpProbability = 0.1
+        }
+        
+        if Double.random(in: 0...1) < powerUpProbability {
             let powerUp = PowerUpType.allCases.randomElement()!
             print("Generated power-up: \(powerUp.symbol)") // Debug print
             return powerUp.rawValue
@@ -199,7 +222,7 @@ class GameState: ObservableObject {
                 // Reset fast falling for the new number
                 isFastFalling = false
                 timer?.invalidate()
-                timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+                timer = Timer.scheduledTimer(withTimeInterval: getFallSpeed(), repeats: true) { [weak self] _ in
                     self?.updateFallingNumber()
                 }
                 
