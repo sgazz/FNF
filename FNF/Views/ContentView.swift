@@ -31,115 +31,157 @@ struct ContentView: View {
             
             if isShowingMainMenu {
                 VStack(spacing: 40) {
-                    Text("Fall Number...Fall!")
+                    Text("Fall, Number...Fall!")
                         .font(.system(size: 40, weight: .bold, design: .rounded))
                         .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
                         .shadow(color: .yellow.opacity(0.5), radius: 10, x: 0, y: 5)
                         .padding(.top, 60)
                     
-                    Button("Rules") {
+                    Button {
                         showingRules = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "book.fill")
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            Text("Rules")
+                                .font(.title2)
+                        }
+                        .frame(width: 250)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                        )
+                        .foregroundColor(.white)
                     }
-                    .font(.title2)
-                    .frame(width: 250)
-                    .padding(.vertical, 15)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.15))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
-                            )
-                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
-                    )
-                    .foregroundColor(.white)
                     
-                    Button("Mode Selection") {
+                    Button {
                         showingModeSelection = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "gamecontroller.fill")
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            Text("Mode Selection")
+                                .font(.title2)
+                        }
+                        .frame(width: 250)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                        )
+                        .foregroundColor(.white)
                     }
-                    .font(.title2)
-                    .frame(width: 250)
-                    .padding(.vertical, 15)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.15))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
-                            )
-                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
-                    )
-                    .foregroundColor(.white)
                     
-                    Button("Statistics") {
+                    Button {
                         showingStatistics = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "chart.bar.fill")
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            Text("Statistics")
+                                .font(.title2)
+                        }
+                        .frame(width: 250)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                        )
+                        .foregroundColor(.white)
                     }
-                    .font(.title2)
-                    .frame(width: 250)
-                    .padding(.vertical, 15)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.15))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
-                            )
-                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
-                    )
-                    .foregroundColor(.white)
                     
-                    Button("Achievements") {
+                    Button {
                         showingAchievements = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "trophy.fill")
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            Text("Achievements")
+                                .font(.title2)
+                        }
+                        .frame(width: 250)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                        )
+                        .foregroundColor(.white)
                     }
-                    .font(.title2)
-                    .frame(width: 250)
-                    .padding(.vertical, 15)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.15))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
-                            )
-                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
-                    )
-                    .foregroundColor(.white)
                     
-                    Button("Challenges") {
+                    Button {
                         showingChallenges = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "star.fill")
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            Text("Challenges")
+                                .font(.title2)
+                        }
+                        .frame(width: 250)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                        )
+                        .foregroundColor(.white)
                     }
-                    .font(.title2)
-                    .frame(width: 250)
-                    .padding(.vertical, 15)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.15))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
-                            )
-                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
-                    )
-                    .foregroundColor(.white)
                     
-                    Button("Start Game") {
+                    Button {
                         isShowingMainMenu = false
                         gameState.resetGame()
                         gameState.startGameTimer()
+                    } label: {
+                        HStack {
+                            Image(systemName: "play.fill")
+                                .font(.title2)
+                                .foregroundColor(Color(red: 1.0, green: 0.8, blue: 0.0))
+                            Text("Start Game")
+                                .font(.title2)
+                        }
+                        .frame(width: 250)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.15))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
+                                )
+                                .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
+                        )
+                        .foregroundColor(.white)
                     }
-                    .font(.title2)
-                    .frame(width: 250)
-                    .padding(.vertical, 15)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.15))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
-                            )
-                            .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 0)
-                    )
-                    .foregroundColor(.white)
                     
                     Button(action: {
                         isMuted.toggle()
@@ -168,7 +210,7 @@ struct ContentView: View {
                     Spacer()
                 }
             } else {
-                VStack(spacing: 20) {
+                VStack(spacing: 10) {
                     // Top menu - remove system icons if they are replaced by main menu buttons
                     HStack {
                         Spacer()
@@ -220,12 +262,12 @@ struct ContentView: View {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 15)
-                            .fill(Color.black.opacity(0.4)) // Tamnija pozadina
+                            .fill(Color.black.opacity(0.4))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 15)
-                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3) // Zlatna ivica
+                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 3)
                             )
-                            .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0) // Zlatni sjaj
+                            .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
                     )
                     .padding(.horizontal)
                     
@@ -234,7 +276,6 @@ struct ContentView: View {
                         .frame(maxHeight: .infinity)
                         .frame(height: UIScreen.main.bounds.height * 0.50)
                         .padding(.horizontal)
-                        .padding(.vertical, 1)
                         .overlay(
                             Group {
                                 if let remainingTime = gameState.remainingTime {
@@ -323,7 +364,7 @@ struct ContentView: View {
                                 .shadow(color: .yellow.opacity(0.6), radius: 10, x: 0, y: 0)
                         }
                     }
-                    .padding()
+                    .padding(.horizontal)
                 }
                 
                 // Game Over overlay
