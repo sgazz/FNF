@@ -87,4 +87,5 @@ private struct GameBoardRow: View {
 
 #Preview {
     GameBoardView(gameState: GameState())
+        .preferredColorScheme(.dark)
 } 

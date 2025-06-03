@@ -101,4 +101,5 @@ struct ModeSelectionView: View {
 
 #Preview {
     ModeSelectionView(selectedMode: .constant(.classic))
+        .preferredColorScheme(.dark)
 } 

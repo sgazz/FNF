@@ -102,4 +102,5 @@ extension Achievement.Category: CaseIterable {
 
 #Preview {
     AchievementsView()
+        .preferredColorScheme(.dark)
 } 

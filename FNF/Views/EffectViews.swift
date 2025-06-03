@@ -127,6 +127,5 @@ struct AchievementEffectView: View {
             category: .score
         ))
     }
-    .padding()
-    .background(Color.black)
+    .preferredColorScheme(.dark)
 } 
